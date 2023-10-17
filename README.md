@@ -2,6 +2,7 @@
 
 Origami es un proyecto académico correspondiente a la asignatura de Administración de Proyectos Informáticos.
 
+    
 ## Integrantes
 
 | Nombres                                  | Carnet      |
@@ -11,8 +12,8 @@ Origami es un proyecto académico correspondiente a la asignatura de Administrac
 | _*Bryan Alexander Mata Cáceres*_         | _*PC18035*_ |
 | _*Cristian Alexander Guardado Escobar*_  | _*GE19008*_ |
 | _*Junior Mauricio Villalta Flores*_      | _*VF19012*_ |
-
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+    
+<p align="center"><a target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
 <a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
