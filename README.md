@@ -1,10 +1,11 @@
 # O R I G A M I
 
 Origami es un proyecto académico correspondiente a la asignatura de Administración de Proyectos Informáticos.
-
-    
+ 
 ## Integrantes
 
+<div align="center">
+    
 | Nombres                                  | Carnet      |
 |------------------------------------------|-------------|
 | _*Alejandra Clairé Aguilar Mata*_        | _*AM19089*_ |
@@ -12,7 +13,9 @@ Origami es un proyecto académico correspondiente a la asignatura de Administrac
 | _*Bryan Alexander Mata Cáceres*_         | _*MC19038*_ |
 | _*Cristian Alexander Guardado Escobar*_  | _*GE19008*_ |
 | _*Junior Mauricio Villalta Flores*_      | _*VF19012*_ |
-    
+</div>
+
+<hr>
 <p align="center"><a target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
