@@ -9,7 +9,7 @@ Origami es un proyecto académico correspondiente a la asignatura de Administrac
 |------------------------------------------|-------------|
 | _*Alejandra Clairé Aguilar Mata*_        | _*AM19089*_ |
 | _*Azucena Eleticia Merlos Sandoval*_     | _*MS19038*_ |
-| _*Bryan Alexander Mata Cáceres*_         | _*PC18035*_ |
+| _*Bryan Alexander Mata Cáceres*_         | _*MC19038*_ |
 | _*Cristian Alexander Guardado Escobar*_  | _*GE19008*_ |
 | _*Junior Mauricio Villalta Flores*_      | _*VF19012*_ |
     
