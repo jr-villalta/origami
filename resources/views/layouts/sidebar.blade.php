@@ -5,7 +5,7 @@
       <div class="sidebar-brand-icon rotate-n-15">
         <i class="fas fa-laugh-wink"></i>
       </div>
-      <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+      <div class="sidebar-brand-text mx-3">Origami</div>
     </a>
     
     <!-- Divider -->
@@ -21,13 +21,13 @@
     <li class="nav-item">
       <a class="nav-link" href="{{ route('products') }}">
         <i class="fas fa-fw fa-tachometer-alt"></i>
-        <span>Product</span></a>
+        <span>Productos</span></a>
     </li>
     
     <li class="nav-item">
       <a class="nav-link" href="/profile">
         <i class="fas fa-fw fa-tachometer-alt"></i>
-        <span>Profile</span></a>
+        <span>Perfil</span></a>
     </li>
     
     <!-- Divider -->
