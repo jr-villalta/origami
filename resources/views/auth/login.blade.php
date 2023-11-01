@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>SB Admin 2 - Login</title>
+  <title>Login</title>
   <!-- Custom fonts for this template-->
   <link href="{{ asset('admin_assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -27,7 +27,7 @@
               <div class="col-lg-6">
                 <div class="p-5">
                   <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                    <h1 class="h4 text-gray-900 mb-4">¡Bienvenido!</h1>
                   </div>
                   <form action="{{ route('login.action') }}" method="POST" class="user">
                     @csrf
@@ -41,7 +41,7 @@
                       </div>
                     @endif
                     <div class="form-group">
-                      <input name="email" type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                      <input name="email" type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Ingresa tu correo...">
                     </div>
                     <div class="form-group">
                       <input name="password" type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
@@ -57,7 +57,10 @@
                   </form>
                   <hr>
                   <div class="text-center">
-                    <a class="small" href="{{ route('register') }}">Create an Account!</a>
+                    <a class="small" href="{{ route('register') }}">¡Crea una cuenta!</a>
+                  </div>
+                  <div class="text-center">
+                    <a class="small" href="{{ url('/') }}">Volver a inicio</a>
                   </div>
                 </div>
               </div>
