@@ -10,6 +10,8 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.21.0/font/bootstrap-icons.css" integrity="sha384-MkUMsOdXD4R+Y3lHiwq5h57yU/2A0d6Dh65y5v9CbvDPBrSPBNkoP+BV4UAVDAw8" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
         <!-- Styles -->
         <style>
@@ -27,8 +29,11 @@
                 @if (Route::has('login'))
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Categorías</a>
+                        </li>
+                        <li class="nav-item">
                         @auth
-                            <a class="nav-link active" aria-current="page" href="{{ url('/') }}">Home</a>
+                            <a class="nav-link active" aria-current="page" href="{{ url('/') }}">Perfil</a>
                         @else
                             <a class="nav-link active" aria-current="page" href="{{ route('login') }}">Login</a>
                         </li>
@@ -44,6 +49,11 @@
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
+                </div>
+                <div class="d-flex">
+                    <button class="btn btn-link" id="cartToggle" data-bs-toggle="offcanvas" href="#cartSidebar" aria-controls="cartSidebar">
+                        <i class="fas fa-shopping-cart"></i>
+                    </button>
                 </div>
             </div>
             <!-- botón de carrito de compras -->
@@ -73,6 +83,15 @@
           </nav>
 
          -->
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="cartSidebar" aria-labelledby="cartSidebarLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="cartSidebarLabel">Carrito de Compras</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close">X</button>
+            </div>
+            <div class="offcanvas-body">
+                <!-- Contenido de tu carrito de compras aquí -->
+            </div>
+        </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     </body>
 </html>
