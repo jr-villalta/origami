@@ -95,9 +95,9 @@
 
         <!-- Productos -->
         <div class="container-fluid">
-            <div class="row">
+            <div class="row d-flex justify-content-center">
                 @foreach($products as $item)
-                    <div class="col-md-2">
+                    <div class="col-md-3 col-sm-6 p-3">
                         <div class="card">
                             <!-- Validar si hay una imagen disponible -->
                             @if ($item->imagen)
@@ -106,10 +106,12 @@
                                 <img src="https://via.placeholder.com/50x50" class="card-img-top" alt="Imagen no disponible">
                             @endif
                             <div class="card-body">
-                                <h5 class="card-title">{{ $item->nombre }}</h5>
-                                <p class="card-text">Descripción: {{ $item->descripcion }}</p>
-                                <p class="card-text">Stock: {{ $item->cantidad }}</p>
-                                <p class="card-text">Precio: ${{ $item->precio }}</p>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><h5 class="card-title">{{ $item->nombre }}</h5></li>
+                                    <li class="list-group-item"><p class="card-text">stock: {{ $item->cantidad }}</p></li>
+                                    <li class="list-group-item"><p class="card-text">Precio: ${{ $item->precio }}</p></li>
+                                    <li class="list-group-item"><a href="#" class="btn btn-danger d-flex justify-content-center align-items-center"><i class="fas fa-shopping-cart p-1" type="button"></i> Agregar al carrito</a></p></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
