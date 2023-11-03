@@ -86,7 +86,7 @@
         <div class="offcanvas offcanvas-end" tabindex="-1" id="cartSidebar" aria-labelledby="cartSidebarLabel">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="cartSidebarLabel">Carrito de Compras</h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close">X</button>
+                <Button type="button" class="btn-close fas fa-window-close" data-bs-dismiss="offcanvas" aria-label="Close"></Button>
             </div>
             <div class="offcanvas-body">
                 <!-- Contenido de tu carrito de compras aquí -->
