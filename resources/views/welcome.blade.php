@@ -92,6 +92,30 @@
                 <!-- Contenido de tu carrito de compras aquí -->
             </div>
         </div>
+
+        <!-- Productos -->
+        <div class="container-fluid">
+            <div class="row">
+                @foreach($products as $item)
+                    <div class="col-md-2">
+                        <div class="card">
+                            <!-- Validar si hay una imagen disponible -->
+                            @if ($item->imagen)
+                                <img src="{{ $item->imagen }}" class="card-img-top" alt="{{ $item->nombre }}">
+                            @else
+                                <img src="https://via.placeholder.com/50x50" class="card-img-top" alt="Imagen no disponible">
+                            @endif
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $item->nombre }}</h5>
+                                <p class="card-text">Descripción: {{ $item->descripcion }}</p>
+                                <p class="card-text">Stock: {{ $item->cantidad }}</p>
+                                <p class="card-text">Precio: ${{ $item->precio }}</p>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     </body>
 </html>

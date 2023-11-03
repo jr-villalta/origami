@@ -78,4 +78,10 @@ class ProductController extends Controller
   
         return redirect()->route('products')->with('success', 'product deleted successfully');
     }
+
+    public function mostrarTodos()
+    {
+        $products = Product::all();
+        return view('welcome', compact('products'));
+    }
 }
