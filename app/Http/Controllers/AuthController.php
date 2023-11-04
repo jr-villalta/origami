@@ -54,7 +54,16 @@ class AuthController extends Controller
   
         $request->session()->regenerate();
   
-        return redirect()->route('dashboard');
+        // Obtiene al usuario actualmente autenticado
+        $user = Auth::user();
+
+        if ($user->level === 'Admin') {
+            // El usuario es un administrador, redirige al dashboard de administración.
+            return redirect()->route('dashboard');
+        } else {
+            // El usuario no es un administrador, redirige al "/" (home).
+            return redirect('/');
+        }
     }
   
     public function logout(Request $request)
