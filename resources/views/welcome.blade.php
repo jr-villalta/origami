@@ -136,33 +136,35 @@
             </div>
         </div>
         <!-- Modal -->
-        <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    @if (auth()->check())
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="profileModalLabel">Perfil de {{ auth()->user()->name }}</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        @if (auth()->check())
+            <form method="POST" action="{{ route('profile.update') }}">
+                @csrf
+                <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="profileModalLabel">
+                                <i class="fas fa-user"></i> Perfil de {{ auth()->user()->name }}
+                            </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                            </div>
+                            <div class="modal-body">
+                                <label for="name">Nombre:</label>
+                                <input type="text" class="form-control" name="name" value="{{ auth()->user()->name }}" placeholder="Ingresa tu Nombre" required />
+                                <label class="mt-2" for="email">Correo:</label>
+                                <input type="email" class="form-control" name="email" value="{{ auth()->user()->email }}" readonly />
+                                <label class="mt-2" for="password">Nueva Contraseña:</label>
+                                <input type="password" class="form-control" name="password" id="passwordField" placeholder="Cambiar contraseña (opcional)" required />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                            </div>
                         </div>
-                        <div class="modal-body">
-                            <label for="name">Nombre:</label>
-                            <input type="text" class="form-control" name="name" value="{{ auth()->user()->name }}" placeholder="Ingresa tu Nombre" required />
-                            <label class="mt-2" for="email">Correo:</label>
-                            <input type="email" class="form-control" name="email" value="{{ auth()->user()->email }}" readonly />
-                            <label class="mt-2" for="password">Nueva Contraseña:</label>
-                            <input type="password" class="form-control" name="password" id="passwordField" placeholder="Cambiar contraseña (opcional)" required />
-                            <label class="mt-2" for="password_confirmation">Confirmar Contraseña:</label>
-                            <input type="password" class="form-control" name="password_confirmation" id="confirmPasswordField" placeholder="Repite la contraseña" required />
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                        </div>
-                    @endif
+                    </div>
                 </div>
-            </div>
-        </div>
-
+            </form>
+        @endif
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     </body>
 </html>

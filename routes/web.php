@@ -52,3 +52,4 @@ Route::middleware('auth')->group(function () {
 Route::get('/', [App\Http\Controllers\ProductController::class, 'mostrarTodos'])->name('welcome');
 
 // Guardar perfil
+Route::post('/profile/update', [AuthController::class, 'updateProfile'])->name('profile.update');

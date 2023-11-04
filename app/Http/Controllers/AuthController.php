@@ -80,4 +80,30 @@ class AuthController extends Controller
         return view('profile');
     }
 
+    public function updateProfile(Request $request)
+    {
+        $user = auth()->user();
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'nullable|confirmed',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->input('password'));
+        }
+        
+        //$user->save();
+        
+        return redirect()->route('welcome')->with('success', 'Perfil actualizado con éxito');
+    }
+    
 }
