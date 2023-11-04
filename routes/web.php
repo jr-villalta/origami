@@ -50,3 +50,5 @@ Route::middleware('auth')->group(function () {
 
 // utiliza el metodo mostrarTodos del ProductController.php en welcome.blade.php para mostrar todos los productos
 Route::get('/', [App\Http\Controllers\ProductController::class, 'mostrarTodos'])->name('welcome');
+
+// Guardar perfil
