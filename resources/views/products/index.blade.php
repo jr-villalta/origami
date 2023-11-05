@@ -20,8 +20,10 @@
                 <th>Nombre</th>
                 <th>Descripción</th>
                 <th>Cantidad</th>
-                <th>Precio</th>
-                
+                <th>Precio de venta</th>
+                <th>Stock minimo</th>
+                <th>Cantidad sugerida</th>
+                <th>Estado</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -33,12 +35,27 @@
                         <td class="align-middle">{{ $rs->nombre }}</td>
                         <td class="align-middle">{{ $rs->descripcion }}</td>
                         <td class="align-middle">{{ $rs->cantidad }}</td>
-                        <td class="align-middle">{{ $rs->precio }}</td>  
+                        <td class="align-middle">{{ $rs->precio_venta }}</td>
+                        <td class="align-middle">{{ $rs->stock_minimo }}</td>
+                        <td class="align-middle">{{ $rs->cantidad_sugerida }}</td>
+                        <td class="align-middle">
+                            @if ($rs->estado == "Activo")
+                                <form action="{{ route('products.toggleStatus', $rs->id) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger">Desactivar</button>
+                                </form>
+                            @else
+                                <form action="{{ route('products.toggleStatus', $rs->id) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-success">Activar</button>
+                                </form>
+                            @endif
+                        </td>
                         <td class="align-middle">
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href="{{ route('products.show', $rs->id) }}" type="button" class="btn btn-secondary">Detalles</a>
                                 <a href="{{ route('products.edit', $rs->id)}}" type="button" class="btn btn-warning">Editar</a>
-                                <form action="{{ route('products.destroy', $rs->id) }}" method="POST" type="button" class="btn btn-danger p-0" onsubmit="return confirm('Está seguro de borrar este producto? Esta acción no se puede deshacer.')">
+                                <form action="{{ route('products.destroy', $rs->id) }}" method="POST" type="button" class="btn btn-danger p-0" onsubmit="return confirm('¿Está seguro de borrar este producto? Esta acción no se puede deshacer.')">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-danger m-0">Eliminar</button>

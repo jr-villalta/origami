@@ -1,9 +1,9 @@
 @extends('layouts.app')
   
-@section('title', 'Profile')
+@section('title', 'Administrador')
   
 @section('contents')
-    <h1 class="mb-0">Peril</h1>
+    <h1 class="mb-0">Perfil</h1>
     <hr />
  
     <form method="POST" enctype="multipart/form-data" id="profile_setup_frm" action="" >
@@ -21,17 +21,17 @@
                             <input type="text" name="name" class="form-control" placeholder="first name" value="{{ auth()->user()->name }}">
                         </div>
                         <div class="col-md-6">
-                            <label class="labels">Email</label>
-                            <input type="text" name="email" disabled class="form-control" value="{{ auth()->user()->email }}" placeholder="Email">
+                            <label class="labels">Correo</label>
+                            <input type="text" name="email" disabled class="form-control" value="{{ auth()->user()->email }}" placeholder="Correo">
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-md-6">
-                            <label class="labels">Telefefono</label>
+                            <label class="labels">Teléfono</label>
                             <input type="text" name="phone" class="form-control" placeholder="Phone Number" value="{{ auth()->user()->phone }}">
                         </div>
                         <div class="col-md-6">
-                            <label class="labels">Direccion</label>
+                            <label class="labels">Dirección</label>
                             <input type="text" name="address" class="form-control" value="{{ auth()->user()->address }}" placeholder="Address">
                         </div>
                     </div>

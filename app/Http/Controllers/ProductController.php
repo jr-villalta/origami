@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
   
 use Illuminate\Http\Request;
 use App\Models\Product;
- 
+use App\Models\Categoria;
+
 class ProductController extends Controller
 {
     /**
@@ -12,7 +13,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product = Product::orderBy('created_at', 'DESC')->get();
+        $product = Product::all();
   
         return view('products.index', compact('product'));
     }
@@ -22,7 +23,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        $categorias = Categoria::all();
+        return view('products.create', compact('categorias'));
     }
   
     /**
@@ -51,8 +53,9 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         $product = Product::findOrFail($id);
+        $categorias = Categoria::all();
   
-        return view('products.edit', compact('product'));
+        return view('products.edit', compact('product', 'categorias'));
     }
   
     /**
@@ -83,5 +86,15 @@ class ProductController extends Controller
     {
         $products = Product::all();
         return view('welcome', compact('products'));
+    }
+
+    // mostrar estado de producto
+    public function toggleStatus($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->estado = $product->estado == "Activo" ? "Desactivo" : "Activo";
+        $product->save();
+
+        return redirect()->route('products')->with('success', 'Estado del producto actualizado exitosamente');
     }
 }

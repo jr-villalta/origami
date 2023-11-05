@@ -25,6 +25,9 @@
                 @if (Route::has('login'))
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Sobre nosotros</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Categorías</a>
                         </li>
                         <li class="nav-item">
@@ -126,7 +129,7 @@
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item"><h5 class="card-title">{{ $item->nombre }}</h5></li>
                                     <li class="list-group-item"><p class="card-text">stock: {{ $item->cantidad }}</p></li>
-                                    <li class="list-group-item"><p class="card-text">Precio: ${{ $item->precio }}</p></li>
+                                    <li class="list-group-item"><p class="card-text">Precio: ${{ $item->precio_venta }}</p></li>
                                     <li class="list-group-item"><a href="#" class="btn btn-danger d-flex justify-content-center align-items-center"><i class="fas fa-shopping-cart p-1" type="button"></i> Agregar al carrito</a></p></li>
                                 </ul>
                             </div>

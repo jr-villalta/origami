@@ -17,13 +17,51 @@
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Dashboard</span></a>
     </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="#">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Configuraciones</span></a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="#">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Estadístico</span></a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="#">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Facturas</span></a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="#">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Clientes</span></a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Inventario</span></a>
+    </li>
     
     <li class="nav-item">
       <a class="nav-link" href="{{ route('products') }}">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Productos</span></a>
     </li>
-    
+
+    <!-- Categorias  -->
+    <li class="nav-item">
+      <a class="nav-link" href="{{ route('categorias') }}">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Categorias</span></a>
+    </li>
+
+    <!-- profile -->
     <li class="nav-item">
       <a class="nav-link" href="/profile">
         <i class="fas fa-fw fa-tachometer-alt"></i>
