@@ -79,5 +79,60 @@ class ProductSeeder extends Seeder
             'estado' => 'Desactivo'
         ]);
 
+        \App\Models\Product::create([
+            'id_categoria' => 1,
+            'nombre' => 'Papel celofán',
+            'descripcion' => 'Papel celofán de colores',
+            'cantidad' => 1,
+            'precio_venta' => 10,
+            'stock_minimo' => 1,
+            'cantidad_sugerida' => 1,
+            'estado' => 'Desactivo'
+        ]);
+
+        \App\Models\Product::create([
+            'id_categoria' => 1,
+            'nombre' => 'Papel china',
+            'descripcion' => 'Papel china de colores',
+            'cantidad' => 1,
+            'precio_venta' => 10,
+            'stock_minimo' => 1,
+            'cantidad_sugerida' => 1,
+            'estado' => 'Desactivo'
+        ]);
+
+        \App\Models\Product::create([
+            'id_categoria' => 1,
+            'nombre' => 'Papel lustre',
+            'descripcion' => 'Papel lustre de colores',
+            'cantidad' => 1,
+            'precio_venta' => 10,
+            'stock_minimo' => 1,
+            'cantidad_sugerida' => 1,
+            'estado' => 'Desactivo'
+        ]);
+
+        \App\Models\Product::create([
+            'id_categoria' => 1,
+            'nombre' => 'Papel seda',
+            'descripcion' => 'Papel seda de colores',
+            'cantidad' => 1,
+            'precio_venta' => 10,
+            'stock_minimo' => 1,
+            'cantidad_sugerida' => 1,
+            'estado' => 'Desactivo'
+        ]);
+
+        \App\Models\Product::create([
+            'id_categoria' => 1,
+            'nombre' => 'Papel de regalo',
+            'descripcion' => 'Papel de regalo de colores',
+            'cantidad' => 1,
+            'precio_venta' => 10,
+            'stock_minimo' => 1,
+            'cantidad_sugerida' => 1,
+            'estado' => 'Desactivo'
+        ]);
+
     }
 }
