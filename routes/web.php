@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ProductController;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +46,8 @@ Route::middleware('auth')->group(function () {
         Route::put('edit/{id}', 'update')->name('products.update');
         Route::delete('destroy/{id}', 'destroy')->name('products.destroy');
         Route::post('toggle-status/{id}', 'toggleStatus')->name('products.toggleStatus');
+        //Route::get('/procesar-excel', 'procesarExcel')->name('products.procesarExcel');
+
     });
  
     Route::get('/profile', [App\Http\Controllers\AuthController::class, 'profile'])->name('profile');
@@ -58,6 +62,8 @@ Route::middleware('auth')->group(function () {
         Route::delete('destroy/{id}', 'destroy')->name('categorias.destroy');
     });
 
+    // Quiero solo mostrar en la sidebar el diseño de inventario (no tiene que llevar InventarioController por que no existe)
+
 });
 
 // utiliza el metodo mostrarTodos del ProductController.php en welcome.blade.php para mostrar todos los productos
@@ -66,5 +72,25 @@ Route::get('/', [App\Http\Controllers\ProductController::class, 'mostrarTodos'])
 // Guardar perfil
 Route::post('/profile/update', [AuthController::class, 'updateProfile'])->name('profile.update');
 
-// guardar estado de producto
+// Inventario
+Route::get('/inventario', function () {
+    return view('inventario.index');
+})->name('inventario');
+
+// descargar plantilla de inventario
+Route::get('/plantilla', function () {
+    $file  = public_path() . "/plantilla.xlsx";
+    
+    if (!file_exists($file)) {
+        abort(404);
+    }
+    
+    $content = file_get_contents($file);
+    return response($content)->withHeaders([
+        'Content-Type' => mime_content_type($file)
+    ]);
+})->name('plantillaInventario');
+
+// cargar el nuevo inventario
+Route::post('/cargar-inventario', [App\Http\Controllers\ProductController::class, 'cargarInventario'])->name('cargarInventario'); // pruebas :D
 

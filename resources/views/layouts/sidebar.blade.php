@@ -20,31 +20,31 @@
 
     <li class="nav-item">
       <a class="nav-link" href="#">
-        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <i class=""></i>
         <span>Configuraciones</span></a>
     </li>
 
     <li class="nav-item">
       <a class="nav-link" href="#">
-        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <i class=""></i>
         <span>Estadístico</span></a>
     </li>
 
     <li class="nav-item">
       <a class="nav-link" href="#">
-        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <i class=""></i>
         <span>Facturas</span></a>
     </li>
 
     <li class="nav-item">
       <a class="nav-link" href="#">
-        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <i class=""></i>
         <span>Clientes</span></a>
     </li>
 
     <li class="nav-item">
-      <a class="nav-link" href="">
-        <i class="fas fa-fw fa-tachometer-alt"></i>
+      <a class="nav-link" href="{{ route('inventario') }}">
+        <i class=""></i>
         <span>Inventario</span></a>
     </li>
     
@@ -66,6 +66,18 @@
       <a class="nav-link" href="/profile">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Perfil</span></a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="/">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Sitio Web</span></a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="{{ route('logout') }}">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Cerrar Sesión</span></a>
     </li>
     
     <!-- Divider -->

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Categoria;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -97,4 +99,37 @@ class ProductController extends Controller
 
         return redirect()->route('products')->with('success', 'Estado del producto actualizado exitosamente');
     }
+
+    // cargar la inserción de los datos
+    public function cargarInventario(Request $request)
+    {
+        $request->validate([
+            'plantilla' => 'required|mimes:xlsx,xls'
+        ]);
+
+        $path = $request->file('plantilla')->getRealPath();
+        $data = Excel::load($path)->get();
+
+        if ($data->count()) {
+            foreach ($data as $key => $value) {
+                $arr[] = [
+                    'id_categoria' => 1,
+                    'nombre' => $value->nombre,
+                    'descripcion' => $value->descripcion,
+                    'cantidad' => $value->cantidad,
+                    'stock_minimo' => $value->stock_minimo,
+                    'precio_venta' => $value->precio,
+                    'cantidad_sugerida' => $value->cantidad_sugerida,
+                    'estado' => $value->estado
+                ];
+            }
+
+            if (!empty($arr)) {
+                DB::table('products')->insert($arr);
+                return redirect()->route('products')->with('success', 'Inventario cargado exitosamente');
+            }
+        }
+        return back()->with('error', 'Error al cargar el inventario');
+    }
+
 }
