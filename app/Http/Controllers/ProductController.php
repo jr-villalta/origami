@@ -112,31 +112,6 @@ class ProductController extends Controller
 
         $path = $request->file('plantilla')->getRealPath();
         Excel::import(new  ImporProduct,'/home/luisjv/plantilla.xlsx');
-        //$data = Excel::load($path)->get();
-       // $data = Excel::toArray(new Product, request()->file($path).'xlsx', \Maatwebsite\Excel\Excel::XLSX);
-        //$data = Excel::toCollection(new Product,'/home/luisjv/plantilla.xlsx');
-        //Excel::import(new ImportUsers,($path)->get());
-        
-       // if ($data->count()) {
-        /*
-            foreach ($data as $key => $value) {
-                $arr[] = [
-                    'id_categoria' => 1,
-                    'nombre' => $value->nombre,
-                    'descripcion' => $value->descripcion,
-                    'cantidad' => $value->cantidad,
-                    'stock_minimo' => $value->stock_minimo,
-                    'precio_venta' => $value->precio,
-                    'cantidad_sugerida' => $value->cantidad_sugerida,
-                    'estado' => $value->estado
-                ];
-            }
-
-            if (!empty($arr)) {
-                DB::table('products')->insert($arr);
-                return redirect()->route('products')->with('success', 'Inventario cargado exitosamente');
-            }*/
-       // }
         return back();
     }
 

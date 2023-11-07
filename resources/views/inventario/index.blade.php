@@ -25,6 +25,9 @@
             <li class="nav-item" role="presentation">
                 <a class="nav-link" id="tab5-tab" data-toggle="tab" href="#tab5" role="tab" aria-controls="tab5" aria-selected="false">Descargas para Manualidades</a>
             </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="tab6-tab" data-toggle="tab" href="#tab6" role="tab" aria-controls="tab6" aria-selected="false">Compras</a>
+            </li>
         </ul>
 
         <div class="tab-content" id="myTabContent">
@@ -51,6 +54,9 @@
                 
             </div>
             <div class="tab-pane fade" id="tab5" role="tabpanel" aria-labelledby="tab5-tab">
+                
+            </div>
+            <div class="tab-pane fade" id="tab6" role="tabpanel" aria-labelledby="tab6-tab">
                 
             </div>
         </div>
