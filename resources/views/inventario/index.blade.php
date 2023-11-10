@@ -41,6 +41,7 @@
                             <input type="file" class="form-control-file" id="archivoExcel" name="plantilla">
                         </div>
                         <div id="excel-table" class="mt-3"></div>
+                        <button type="button" class="btn btn-danger" id="cancelarCarga" style="display: none;" disabled>Cancelar Carga</button>
                         <button type="submit" class="btn btn-primary">Cargar Inventario</button>
                     </form>
                 </div>
@@ -98,8 +99,23 @@
                 const header = jsonData[0];
                 const rows = jsonData.slice(1);
 
+                 // Validar campos nulos y tipos de datos
+                const validationErrors = validateData(header, rows);
+                
+                if (validationErrors.length > 0) {
+                    // Mostrar alerta de errores
+                    alert('Se encontraron errores en el archivo:\n\n' + validationErrors.join('\n'));
+                    return;
+                }
+
                 const table = generateBootstrapTable(header, rows);
                 $('#excel-table').html(table);
+
+                // Mostrar y habilitar el botón de cancelar después de cargar y mostrar la tabla
+                $('#cancelarCarga').show().prop('disabled', false);
+
+                // Validar los datos
+                reader.readAsBinaryString(file);
             };
 
             reader.readAsBinaryString(file);
@@ -139,8 +155,54 @@
             const file = e.target.files[0];
             if (file) {
                 readExcel(file);
+            } else {
+                // Ocultar y deshabilitar el botón si no hay archivo seleccionado
+                $('#cancelarCarga').hide().prop('disabled', true);
+                $('#excel-table').html(''); // Limpiar la tabla
             }
         });
+
+        // Manejar el evento de cancelar carga
+        $('#cancelarCarga').on('click', function () {
+            alert('Carga de lotes de inventario cancelada.');
+            $('#archivoExcel').val(null); // Limpiar el campo de entrada de archivos
+            $('#excel-table').html(''); // Limpiar la tabla
+            $(this).hide().prop('disabled', true); // Ocultar y deshabilitar el botón
+        });
+
+        function validateData(header, rows) {
+        const validationErrors = [];
+
+        // Indexes of columns to validate
+        const columnsToValidate = ['nombre', 'descripcion', 'precio_venta', 'stock_minimo', 'cantidad_sugerida'];
+
+        rows.forEach(row => {
+            columnsToValidate.forEach(column => {
+                const columnIndex = header.indexOf(column);
+
+                // Validar campo nulo
+                if (typeof row[columnIndex] === 'undefined' || row[columnIndex] === '') {
+                    validationErrors.push(`El campo '${column}' no debe estar vacío.`);
+                }
+
+                // Validar tipos de datos
+                if (column === 'precio_venta' && !/^\d+(\.\d+)?$/.test(row[columnIndex])) {
+                    validationErrors.push(`El campo '${column}' debe ser un número válido.`);
+                }
+
+                if (column === 'stock_minimo' && !/^\d+$/.test(row[columnIndex])) {
+                    validationErrors.push(`El campo '${column}' debe ser un número entero válido.`);
+                }
+
+                if (column === 'cantidad_sugerida' && !/^\d+$/.test(row[columnIndex])) {
+                    validationErrors.push(`El campo '${column}' debe ser un número entero válido.`);
+                }
+            });
+        });
+
+        return validationErrors;
+    }
+
     </script>
 
 @endsection
