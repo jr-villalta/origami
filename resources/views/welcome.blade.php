@@ -20,7 +20,10 @@
                 <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                <a class="navbar-brand" href="{{ url('/') }}">ORIGAMI</a>
+                    <a class="navbar-brand" href="{{ url('/') }}">
+                        <img src="{{ url('/logotipos/5.png') }}" alt="Logo" height="30" width="30" class="me-2">
+                        ORIGAMI
+                    </a>
                 @if (Route::has('login'))
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
@@ -74,31 +77,7 @@
             </div>
             <!-- botón de carrito de compras -->
         </nav>
-        <!-- 
-        <a class="navbar-brand" href="#">Navbar</a>
-        <nav class="navbar bg-body-tertiary shadow p-3 mb-5 bg-body rounded">
-            <div class="container-fluid">
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                    @if (Route::has('login'))
-                        <div class="container-fluid">
-                            @auth
-                                <a href="{{ url('/') }}" class="font-semibold">Home</a>
-                            @else
-                                <a href="{{ route('login') }}" class="font-semibold">Log in</a>
-        
-                                @if (Route::has('register'))
-                                    <a href="{{ route('register') }}" class="font-semibold">Register</a>
-                                @endif
-                            @endauth
-                        </div>
-                    @endif
-                </form>
-            </div>
-          </nav>
 
-         -->
         <div class="offcanvas offcanvas-end" tabindex="-1" id="cartSidebar" aria-labelledby="cartSidebarLabel">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="cartSidebarLabel">Carrito de Compras</h5>
@@ -132,7 +111,7 @@
                                                 <li class="list-group-item"><h5 class="card-title">{{ $item->nombre }}</h5></li>
                                                 <li class="list-group-item"><p class="card-text">{{ $item->cantidad }} disponible</p></li>
                                                 <li class="list-group-item"><p class="card-text">${{ $item->precio_venta }}</p></li>
-                                                <li class="list-group-item"><a href="#" class="btn btn-danger d-flex justify-content-center align-items-center"><i class="fas fa-shopping-cart p-1" type="button"></i> Agregar al carrito</a></p></li>
+                                                <li class="list-group-item"><a href="#" class="btn btn-primary d-flex justify-content-center align-items-center"><i class="fas fa-shopping-cart p-1" type="button"></i> Agregar al carrito</a></p></li>
                                             </ul>
                                         </div>
                                     </div>

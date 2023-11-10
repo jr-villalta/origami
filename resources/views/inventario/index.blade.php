@@ -34,12 +34,13 @@
             <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
                 <div class="container-fluid">
                     <a href="{{ route('plantillaInventario') }}" class="btn btn-info mt-4">Descargar Plantilla</a>
-                    <form action="{{ route('cargarInventario') }}" method="POST" enctype="multipart/form-data">
+                    <form action="" method="" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="archivoExcel" class="h4 mt-3">Selecciona el archivo Excel:</label>
                             <input type="file" class="form-control-file" id="archivoExcel" name="plantilla">
                         </div>
+                        <div id="excel-table" class="mt-3"></div>
                         <button type="submit" class="btn btn-primary">Cargar Inventario</button>
                     </form>
                 </div>
@@ -79,5 +80,67 @@
             </div>
         @endif
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+    <script>
+        function readExcel(file) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                const data = e.target.result;
+                const workbook = XLSX.read(data, { type: 'binary' });
+                const sheet_name_list = workbook.SheetNames;
+                const sheet = workbook.Sheets[sheet_name_list[0]];
+
+                const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+                const header = jsonData[0];
+                const rows = jsonData.slice(1);
+
+                const table = generateBootstrapTable(header, rows);
+                $('#excel-table').html(table);
+            };
+
+            reader.readAsBinaryString(file);
+        }
+
+        function generateBootstrapTable(header, rows) {
+            // Indexes of columns to extract
+            const columnsToExtract = ['nombre', 'descripcion', 'precio_venta', 'stock_minimo', 'cantidad_sugerida'];
+            const columnIndexes = columnsToExtract.map(column => header.indexOf(column));
+
+            let tableHtml = '<table class="table table-bordered table-striped">';
+            // Add the table header
+            tableHtml += '<thead><tr>';
+            columnsToExtract.forEach(column => {
+                tableHtml += `<th>${column}</th>`;
+            });
+            tableHtml += '</tr></thead>';
+
+            // Add the table body
+            tableHtml += '<tbody>';
+            rows.forEach(row => {
+                // Check if all required columns have non-empty values
+                if (columnIndexes.every(index => typeof row[index] !== 'undefined' && row[index] !== '')) {
+                    tableHtml += '<tr>';
+                    columnIndexes.forEach(index => {
+                        tableHtml += `<td>${row[index]}</td>`;
+                    });
+                    tableHtml += '</tr>';
+                }
+            });
+            tableHtml += '</tbody></table>';
+
+            return tableHtml;
+        }
+
+        document.getElementById('archivoExcel').addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                readExcel(file);
+            }
+        });
+    </script>
 
 @endsection
