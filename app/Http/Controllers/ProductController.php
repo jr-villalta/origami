@@ -104,15 +104,5 @@ class ProductController extends Controller
     }
 
     // cargar la inserción de los datos
-    public function cargarInventario(Request $request)
-    {
-        $request->validate([
-            'plantilla' => 'required|mimes:xlsx,xls'
-        ]);
-
-        $path = $request->file('plantilla')->getRealPath();
-        Excel::import(new  ImporProduct,'/home/luisjv/plantilla.xlsx');
-        return back();
-    }
-
+    
 }
