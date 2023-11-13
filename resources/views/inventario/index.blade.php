@@ -14,19 +14,19 @@
                 <a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="true">Carga por Lotes de Inventario</a>
             </li>
             <li class="nav-item" role="presentation">
-                <a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false">Tabla de Descuento</a>
+                <a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false">Compras</a>
             </li>
             <li class="nav-item" role="presentation">
-                <a class="nav-link" id="tab3-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="tab3" aria-selected="false">Alerta de Bajo Stock</a>
+                <a class="nav-link" id="tab3-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="tab3" aria-selected="false">Tabla de Descuento</a>
             </li>
             <li class="nav-item" role="presentation">
-                <a class="nav-link" id="tab4-tab" data-toggle="tab" href="#tab4" role="tab" aria-controls="tab4" aria-selected="false">Valor Total de Inversión del Stock</a>
+                <a class="nav-link" id="tab4-tab" data-toggle="tab" href="#tab4" role="tab" aria-controls="tab4" aria-selected="false">Alerta de Bajo Stock</a>
             </li>
             <li class="nav-item" role="presentation">
-                <a class="nav-link" id="tab5-tab" data-toggle="tab" href="#tab5" role="tab" aria-controls="tab5" aria-selected="false">Descargas para Manualidades</a>
+                <a class="nav-link" id="tab5-tab" data-toggle="tab" href="#tab5" role="tab" aria-controls="tab5" aria-selected="false">Valor Total de Inversión del Stock</a>
             </li>
             <li class="nav-item" role="presentation">
-                <a class="nav-link" id="tab6-tab" data-toggle="tab" href="#tab6" role="tab" aria-controls="tab6" aria-selected="false">Compras</a>
+                <a class="nav-link" id="tab6-tab" data-toggle="tab" href="#tab6" role="tab" aria-controls="tab6" aria-selected="false">Descargas para Manualidades</a>
             </li>
         </ul>
 
@@ -41,7 +41,8 @@
                             <input type="file" class="form-control-file" id="archivoExcel" name="plantilla">
                         </div>
                         <div id="excel-table" class="mt-3"></div>
-                        <button type="submit" class="btn btn-primary">Cargar Inventario</button>
+                        <button type="button" class="btn btn-danger" id="cancelarCarga" style="display: none;" disabled>Cancelar Carga</button>
+                        <button type="submit" class="btn btn-primary" id="cancelarInventario" style="display: none;" disabled>Cargar Inventario</button>
                     </form>
                 </div>
             </div>
@@ -84,6 +85,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@latest"></script>
+
     <script>
         function readExcel(file) {
             const reader = new FileReader();
@@ -100,47 +103,135 @@
 
                 const table = generateBootstrapTable(header, rows);
                 $('#excel-table').html(table);
+
+                // Mostrar y habilitar el botón de cancelar después de cargar y mostrar la tabla
+                $('#cancelarCarga').show().prop('disabled', false);
+
+                // Mostrar y habilitar el botón de cargar después de cargar y mostrar la tabla
+                $('#cancelarInventario').show().prop('disabled', false);
             };
 
             reader.readAsBinaryString(file);
         }
 
+        // valida si hay mas filas aparte de la cabecera
         function generateBootstrapTable(header, rows) {
-            // Indexes of columns to extract
+            
             const columnsToExtract = ['nombre', 'descripcion', 'precio_venta', 'stock_minimo', 'cantidad_sugerida'];
             const columnIndexes = columnsToExtract.map(column => header.indexOf(column));
 
             let tableHtml = '<table class="table table-bordered table-striped">';
-            // Add the table header
             tableHtml += '<thead><tr>';
             columnsToExtract.forEach(column => {
                 tableHtml += `<th>${column}</th>`;
             });
             tableHtml += '</tr></thead>';
 
-            // Add the table body
+            let errors = [];
+
             tableHtml += '<tbody>';
-            rows.forEach(row => {
-                // Check if all required columns have non-empty values
-                if (columnIndexes.every(index => typeof row[index] !== 'undefined' && row[index] !== '')) {
+            rows.forEach((row, rowIndex) => {
+                let rowIsValid = true;
+                let errorMessage = `Error en la fila ${rowIndex + 2}: `;
+
+                if (!columnIndexes.every(index => typeof row[index] !== 'undefined' && row[index] !== '')) {
+                    rowIsValid = false;
+                    errorMessage += 'La fila contiene celdas vacías.';
+                } else if (row.every(value => value === null || value === '')) {
+                    rowIsValid = false;
+                    errorMessage += 'La fila contiene celdas nulas.';
+                } else {
+                    const precioVenta = parseFloat(row[columnIndexes[2]]);
+                    const stockMinimo = parseInt(row[columnIndexes[3]]);
+                    const cantidadSugerida = parseInt(row[columnIndexes[4]]);
+
+                    if (isNaN(precioVenta) || isNaN(stockMinimo) || isNaN(cantidadSugerida) ||
+                        precioVenta < 0 || stockMinimo < 0 || cantidadSugerida < 0 ||
+                        !/^\d+(\.\d{1,2})?$/.test(precioVenta.toString()) ||
+                        !Number.isInteger(stockMinimo) ||
+                        !Number.isInteger(cantidadSugerida)) {
+                        rowIsValid = false;
+                        errorMessage += 'Los valores de precio_venta, stock_minimo, o cantidad_sugerida son inválidos.';
+                    }
+                }
+
+                if (rowIsValid) {
                     tableHtml += '<tr>';
                     columnIndexes.forEach(index => {
                         tableHtml += `<td>${row[index]}</td>`;
                     });
                     tableHtml += '</tr>';
+                } else {
+                    errors.push(errorMessage);
                 }
             });
             tableHtml += '</tbody></table>';
+
+            // Mostrar una sola alerta que resume todos los errores encontrados
+            if (errors.length > 0) {
+                alert(errors.join('\n'));
+            }
 
             return tableHtml;
         }
 
         document.getElementById('archivoExcel').addEventListener('change', function (e) {
             const file = e.target.files[0];
-            if (file) {
+            const archivoInput = document.getElementById('archivoExcel');
+            const archivoRuta = archivoInput.value;
+            const extPermitidas = /(.xlsx)$/i;
+            
+            if (file && extPermitidas.exec(archivoRuta)) {
                 readExcel(file);
+            } else {
+                
+                $('#cancelarCarga').hide().prop('disabled', true);
+                $('#cancelarInventario').hide().prop('disabled', true);
+                $('#excel-table').html('');
             }
         });
+
+        $('#cancelarCarga').on('click', function () {
+            Swal.fire({
+                icon: 'success',
+                title: 'Cancelado con exito!',
+                showConfirmButton: false,
+                timer: 1500
+            });
+            $('#archivoExcel').val(null); // Limpiar el campo de entrada de archivos
+            $('#excel-table').html(''); // Limpiar la tabla
+            $(this).hide().prop('disabled', true); // Ocultar y deshabilitar el botón
+
+            // Ocultar y deshabilitar el botón de cargar
+            $('#cancelarInventario').hide().prop('disabled', true);
+        });
+
+        // valida que el archivo sea de tipo excel
+        $('#archivoExcel').on('change', function () {
+            var archivoInput = document.getElementById('archivoExcel');
+            var archivoRuta = archivoInput.value;
+            var extPermitidas = /(.xlsx)$/i;
+
+            if (!extPermitidas.exec(archivoRuta)) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Asegurate de haber seleccionado un archivo Excel (.xlsx)',
+                });
+                
+                archivoInput.value = '';
+                return false;
+            } else {
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Archivo Excel cargado correctamente',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+        });
+
     </script>
 
 @endsection
