@@ -101,13 +101,21 @@
                 const rows = jsonData.slice(1);
 
                 const table = generateBootstrapTable(header, rows);
-                $('#excel-table').html(table);
+                const hasDataRows = rows.some(row => row.some(value => value !== null && value !== ''));
 
-                // Mostrar y habilitar el botón de cancelar después de cargar y mostrar la tabla
-                $('#cancelarCarga').show().prop('disabled', false);
-
-                // Mostrar y habilitar el botón de cargar después de cargar y mostrar la tabla
-                $('#cargarInventario').show().prop('disabled', false);
+                if (hasDataRows) {
+                    // Mostrar y habilitar el botón de cancelar después de cargar y mostrar la tabla
+                    $('#cancelarCarga').show().prop('disabled', false);
+                    
+                    // Mostrar y habilitar el botón de cargar después de cargar y mostrar la tabla
+                    $('#cargarInventario').show().prop('disabled', false);
+                    
+                    $('#excel-table').html(table);
+                } else {
+                    $('#cancelarCarga').show().prop('disabled', false);
+                    $('#cargarInventario').hide().prop('disabled', true);
+                    $('#excel-table').html('');
+                }
             };
 
             reader.readAsBinaryString(file);
@@ -120,7 +128,7 @@
             const columnIndexes = columnsToExtract.map(column => header.indexOf(column));
 
             let tableHtml = '<table class="table table-bordered table-striped">';
-            tableHtml += '<thead><tr>';
+            tableHtml += '<thead class="thead-dark"><tr>';
             columnsToExtract.forEach(column => {
                 tableHtml += `<th>${column}</th>`;
             });
@@ -220,14 +228,6 @@
                 
                 archivoInput.value = '';
                 return false;
-            } else {
-
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Archivo Excel cargado correctamente',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
             }
         });
 
