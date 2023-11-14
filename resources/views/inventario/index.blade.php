@@ -34,7 +34,7 @@
             <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
                 <div class="container-fluid">
                     <a href="{{ route('plantillaInventario') }}" class="btn btn-info mt-4">Descargar Plantilla</a>
-                    <form action="" method="" enctype="multipart/form-data">
+                    <form id="inventarioForm" action="{{ route('cargarInventario') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="archivoExcel" class="h4 mt-3">Selecciona el archivo Excel:</label>
@@ -42,7 +42,7 @@
                         </div>
                         <div id="excel-table" class="mt-3"></div>
                         <button type="button" class="btn btn-danger" id="cancelarCarga" style="display: none;" disabled>Cancelar Carga</button>
-                        <button type="submit" class="btn btn-primary" id="cancelarInventario" style="display: none;" disabled>Cargar Inventario</button>
+                        <button type="submit" class="btn btn-primary" id="cargarInventario" style="display: none;" disabled>Cargar Inventario</button>
                     </form>
                 </div>
             </div>
@@ -108,7 +108,7 @@
                 $('#cancelarCarga').show().prop('disabled', false);
 
                 // Mostrar y habilitar el botón de cargar después de cargar y mostrar la tabla
-                $('#cancelarInventario').show().prop('disabled', false);
+                $('#cargarInventario').show().prop('disabled', false);
             };
 
             reader.readAsBinaryString(file);
@@ -186,7 +186,7 @@
             } else {
                 
                 $('#cancelarCarga').hide().prop('disabled', true);
-                $('#cancelarInventario').hide().prop('disabled', true);
+                $('#cargarInventario').hide().prop('disabled', true);
                 $('#excel-table').html('');
             }
         });
@@ -203,7 +203,7 @@
             $(this).hide().prop('disabled', true); // Ocultar y deshabilitar el botón
 
             // Ocultar y deshabilitar el botón de cargar
-            $('#cancelarInventario').hide().prop('disabled', true);
+            $('#cargarInventario').hide().prop('disabled', true);
         });
 
         // valida que el archivo sea de tipo excel
@@ -231,6 +231,31 @@
                 });
             }
         });
+
+        // insertar datos del archivo excel a la base de datos
+        $('#inventarioForm').on('submit', function (e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¡No podrás revertir esto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#inventarioForm').submit();
+
+                    Swal.fire(
+                        '¡Cargado!',
+                        'El archivo ha sido cargado.',
+                        'success'
+                    )
+                }
+            });
+        });
+
 
     </script>
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Categoria;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -98,6 +99,6 @@ class ProductController extends Controller
         return redirect()->route('products')->with('success', 'Estado del producto actualizado exitosamente');
     }
 
-    // cargar la inserción de los datos
+    // cargar inventario por lotes
     
 }
