@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Categoria;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -100,5 +100,23 @@ class ProductController extends Controller
     }
 
     // cargar inventario por lotes
-    
+    public function cargarInventario(Request $request)
+    {
+        $products = $request->input('products');
+
+        foreach ($products as $productData) {
+            try {
+                // Validate the product data before insertion
+                $this->validateProductData($productData);
+
+                // Insert the product into the database
+                DB::table('products')->insert($productData);
+            } catch (\Exception $e) {
+                // Handle validation or insertion errors
+                return response()->json(['error' => $e->getMessage()], 500);
+            }
+        }
+
+        return response()->json(['success' => 'Inventario cargado exitosamente']);
+    }
 }

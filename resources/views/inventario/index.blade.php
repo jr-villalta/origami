@@ -127,7 +127,7 @@
             const columnsToExtract = ['nombre', 'descripcion', 'precio_venta', 'stock_minimo', 'cantidad_sugerida'];
             const columnIndexes = columnsToExtract.map(column => header.indexOf(column));
 
-            let tableHtml = '<table class="table table-bordered table-striped">';
+            let tableHtml = '<table class="table table-bordered table-striped table-hover">';
             tableHtml += '<thead class="thead-dark"><tr>';
             columnsToExtract.forEach(column => {
                 tableHtml += `<th>${column}</th>`;
@@ -165,7 +165,7 @@
                 if (rowIsValid) {
                     tableHtml += '<tr>';
                     columnIndexes.forEach(index => {
-                        tableHtml += `<td>${row[index]}</td>`;
+                        tableHtml += `<td><input type="text" class="form-control-plaintext" value="${row[index]}" readonly></td>`;
                     });
                     tableHtml += '</tr>';
                 } else {
@@ -244,13 +244,51 @@
                 cancelButtonColor: '#d33',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    $('#inventarioForm').submit();
+                    // Get the data from the table
+                    const rows = $('#excel-table tbody tr').map(function() {
+                        return $(this).find('td').map(function() {
+                            return $(this).text();
+                        }).get();
+                    }).get();
 
-                    Swal.fire(
-                        '¡Cargado!',
-                        'El archivo ha sido cargado.',
-                        'success'
-                    )
+                    // Create an array to store the product data
+                    const products = [];
+
+                    // Extract and format the data
+                    rows.forEach(function(row) {
+                        products.push({
+                            nombre: row[0],
+                            descripcion: row[1],
+                            precio_venta: row[2],
+                            stock_minimo: row[3],
+                            cantidad_sugerida: row[4],
+                            // Add other fields as needed
+                        });
+                    });
+
+                    // Send the product data to the server using AJAX
+                    $.ajax({
+                        type: 'POST',
+                        url: '/cargar-inventario',
+                        data: {
+                            _token: $('input[name="_token"]').val(),
+                            products: products,
+                        },
+                        success: function(response) {
+                            Swal.fire(
+                                '¡Cargado!',
+                                'El archivo ha sido cargado.',
+                                'success'
+                            )
+                        },
+                        error: function(error) {
+                            Swal.fire(
+                                'Error',
+                                'Hubo un problema al cargar el archivo.',
+                                'error'
+                            )
+                        }
+                    });
                 }
             });
         });
