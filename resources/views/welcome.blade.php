@@ -96,7 +96,7 @@
                     <div class="row d-flex justify-content-evenly">
                         @foreach($products as $item)
                             @if($item->estado === 'Activo')
-                                <div class="col-md-3 col-sm-6 p-2">
+                                <div class="col-md-4 col-sm-6 p-2">
                                     <div class="card">
                                         <a href="#">
                                             @if ($item->imagen)
