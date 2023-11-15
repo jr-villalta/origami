@@ -85,7 +85,8 @@ class ProductController extends Controller
 
     public function mostrarTodos()
     {
-        $products = Product::all();
+        $products = Product::where('estado', '=', 'Activo');
+        $products = $products->paginate(2);
         $categorias = Categoria::all();
         return view('welcome', compact('products', 'categorias'));	
         

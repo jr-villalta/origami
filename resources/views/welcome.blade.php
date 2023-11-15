@@ -106,6 +106,7 @@
                 </div>
             </div>
         </div>
+
         <!-- Productos -->
         <div class="col-md-9 col-12">
             <div class="row">
@@ -133,6 +134,45 @@
                     @endif
                 @endforeach
             </div>
+
+            <!-- Enlaces de paginación -->
+            <!-- Enlaces de paginación -->
+<div class="d-flex justify-content-center">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            {{-- Anterior --}}
+            @if ($products->onFirstPage())
+                <li class="page-item disabled">
+                    <span class="page-link" aria-hidden="true">&laquo;</span>
+                </li>
+            @else
+                <li class="page-item">
+                    <a class="page-link" href="{{ $products->previousPageUrl() }}" aria-label="Previous">&laquo;</a>
+                </li>
+            @endif
+
+            {{-- Números de página --}}
+            @for ($i = 1; $i <= $products->lastPage(); $i++)
+                <li class="page-item {{ $i == $products->currentPage() ? 'active' : '' }}">
+                    <a class="page-link" href="{{ $products->url($i) }}">{{ $i }}</a>
+                </li>
+            @endfor
+
+            {{-- Siguiente --}}
+            @if ($products->hasMorePages())
+                <li class="page-item">
+                    <a class="page-link" href="{{ $products->nextPageUrl() }}" aria-label="Next">&raquo;</a>
+                </li>
+            @else
+                <li class="page-item disabled">
+                    <span class="page-link" aria-hidden="true">&raquo;</span>
+                </li>
+            @endif
+        </ul>
+    </nav>
+</div>
+
+
         </div>
     </div>
 </div>
