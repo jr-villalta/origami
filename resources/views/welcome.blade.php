@@ -36,8 +36,18 @@
                                 Cuenta
                             </a>
                             <ul class="dropdown-menu">
+                                @if (auth()->user()->level == 'Admin')
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('dashboard') }}">
+                                            <i class="fas fa-tachometer-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Administración
+                                        </a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                @endif
                                 <li>
                                     <button class="nav-link btn btn-link" data-bs-toggle="modal" data-bs-target="#profileModal">
+                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Ver perfil
                                     </button>
                                 </li>
