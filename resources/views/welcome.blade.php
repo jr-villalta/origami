@@ -14,7 +14,7 @@
 
     </head>
     <body class="antialiased">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-5 bg-body rounded sticky-top">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-4 bg-body rounded sticky-top">
             <div class="container-fluid">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -45,13 +45,13 @@
                                 <li>
                                     <a class="dropdown-item" href="{{ route('logout') }}">
                                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Logout
+                                        Cerrar sesion
                                     </a>
                                 </li>
                             </ul>
                             </li>
                         @else
-                            <a class="nav-link active" aria-current="page" href="{{ route('login') }}">Login</a>
+                            <a class="nav-link active" aria-current="page" href="{{ route('login') }}">Iniciar sesion</a>
                         </li>
                         <li class="nav-item">
                         @if (Route::has('register'))
@@ -85,41 +85,99 @@
             </div>
         </div>
 
-        <!-- Productos -->
+        <div class="container-fluid p-1">
+        <!-- Categorias y Productos -->
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-2"></div> <!-- Columna izquierda con espacio -->
-                <div class="col-md-8"> <!-- Columna central para mostrar productos -->
-                    <div class="row d-flex justify-content-evenly">
-                        @foreach($products as $item)
-                            @if($item->estado === 'Activo')
-                                <div class="col-md-4 col-sm-6 p-2">
-                                    <div class="card">
-                                        <a href="#">
-                                            @if ($item->imagen)
-                                                <img src="" class="card-img-top" alt="{{ $item->nombre }}">
-                                            @else
-                                                <img src="https://via.placeholder.com/50x50" class="card-img-top" alt="Imagen no disponible">
-                                            @endif
-                                        </a>
-                                        
-                                        <div class="card-body">
-                                            <ul class="list-group list-group-flush">
-                                                <li class="list-group-item"><h5 class="card-title">{{ $item->nombre }}</h5></li>
-                                                <li class="list-group-item"><p class="card-text">{{ $item->cantidad }} disponible</p></li>
-                                                <li class="list-group-item"><p class="card-text">${{ $item->precio_venta }}</p></li>
-                                                <li class="list-group-item"><a href="#" class="btn btn-primary d-flex justify-content-center align-items-center"><i class="fas fa-shopping-cart p-1" type="button"></i> Agregar al carrito</a></p></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
-                        @endforeach
-                    </div>
+    <div class="row">
+        <div class="col-md-3 col-12 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Categorías</h5>
+                    <ul class="list-group list-group-flush">
+                    @if($categorias->count() > 0)
+    @foreach($categorias as $categoria)
+        <li class="list-group-item">{{ $categoria->nombre }}</li>
+    @endforeach
+@else
+    <!-- Mensaje o contenido alternativo si no hay categorías -->
+@endif
+
+                    </ul>
                 </div>
-                <div class="col-md-2"></div> <!-- Columna derecha con espacio -->
             </div>
         </div>
+
+        <!-- Productos -->
+        <div class="col-md-9 col-12">
+            <div class="row">
+                @foreach($products as $item)
+                    @if($item->estado === 'Activo')
+                        <div class="col-md-4 col-sm-6">
+                            <div class="card mb-3">
+                                <a href="#">
+                                    @if ($item->imagen)
+                                        <img src="" class="card-img-top" alt="{{ $item->nombre }}">
+                                    @else
+                                        <img src="https://via.placeholder.com/50x50" class="card-img-top" alt="Imagen no disponible">
+                                    @endif
+                                </a>
+                                <div class="card-body">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item"><h5 class="card-title">{{ $item->nombre }}</h5></li>
+                                        <li class="list-group-item"><p class="card-text">{{ $item->cantidad }} disponible</p></li>
+                                        <li class="list-group-item"><p class="card-text">${{ $item->precio_venta }}</p></li>
+                                        <li class="list-group-item"><a href="#" class="btn btn-primary d-flex justify-content-center align-items-center"><i class="fas fa-shopping-cart p-1" type="button"></i> Agregar al carrito</a></p></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+
+            <!-- Enlaces de paginación -->
+            <!-- Enlaces de paginación -->
+<div class="d-flex justify-content-center">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            {{-- Anterior --}}
+            @if ($products->onFirstPage())
+                <li class="page-item disabled">
+                    <span class="page-link" aria-hidden="true">&laquo;</span>
+                </li>
+            @else
+                <li class="page-item">
+                    <a class="page-link" href="{{ $products->previousPageUrl() }}" aria-label="Previous">&laquo;</a>
+                </li>
+            @endif
+
+            {{-- Números de página --}}
+            @for ($i = 1; $i <= $products->lastPage(); $i++)
+                <li class="page-item {{ $i == $products->currentPage() ? 'active' : '' }}">
+                    <a class="page-link" href="{{ $products->url($i) }}">{{ $i }}</a>
+                </li>
+            @endfor
+
+            {{-- Siguiente --}}
+            @if ($products->hasMorePages())
+                <li class="page-item">
+                    <a class="page-link" href="{{ $products->nextPageUrl() }}" aria-label="Next">&raquo;</a>
+                </li>
+            @else
+                <li class="page-item disabled">
+                    <span class="page-link" aria-hidden="true">&raquo;</span>
+                </li>
+            @endif
+        </ul>
+    </nav>
+</div>
+
+
+        </div>
+    </div>
+</div>
+</div>
+
         <!-- Modal -->
         @if (auth()->check())
             <form method="POST" action="{{ route('profile.update') }}">

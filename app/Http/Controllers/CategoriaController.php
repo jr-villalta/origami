@@ -14,6 +14,21 @@ class CategoriaController extends Controller
         return view('categorias.index', compact('categoria'));
     }
 
+    public function welcome()
+{
+    $categoria = Categoria::all();
+
+    if (isset($categoria)) {
+        return view('welcome', compact('categoria'));
+    } else {
+        // Puedes manejar el caso en el que $categoria no esté definida
+        // o asignar un valor predeterminado a $categoria si es necesario.
+        $categoria = [];
+        return view('welcome', compact('categoria'));
+    }
+}
+
+
     public function create()
     {
         return view('categorias.create');
