@@ -105,21 +105,25 @@ class ProductController extends Controller
     // cargar inventario por lotes
     public function cargarInventario(Request $request)
     {
-        $products = $request->input('products');
+        // JSON
+        $productos = $request->json()->all();
 
-        foreach ($products as $productData) {
-            try {
-                // Validate the product data before insertion
-                $this->validateProductData($productData);
-
-                // Insert the product into the database
-                DB::table('products')->insert($productData);
-            } catch (\Exception $e) {
-                // Handle validation or insertion errors
-                return response()->json(['error' => $e->getMessage()], 500);
-            }
+        foreach ($productos as $productData) {
+            // Crear un nuevo objeto Product con los datos recibidos
+            Product::create([
+                'id_categoria' => 1,
+                'nombre' => $productData['nombre'],
+                'descripcion' => $productData['descripcion'],
+                'cantidad' => 0,
+                'precio_venta' => $productData['precio_venta'],
+                'stock_minimo' => $productData['stock_minimo'],
+                'cantidad_sugerida' => $productData['cantidad_sugerida'],
+                'estado' => "Desactivo",
+            ]);
         }
 
-        return response()->json(['success' => 'Inventario cargado exitosamente']);
+        // muestra el json
+        //return response()->json($productos);
+        return redirect()->route('products')->with('success', 'Inventario cargado exitosamente');
     }
 }

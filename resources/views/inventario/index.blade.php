@@ -3,6 +3,9 @@
 @section('title', 'Inventario')
 
 @section('contents')
+<head>
+
+</head>
     <div class="d-flex align-items-center justify-content-between">
         <h1 class="mb-0">Inventario de Productos</h1>
     </div>
@@ -34,14 +37,14 @@
             <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
                 <div class="container-fluid">
                     <a href="{{ route('plantillaInventario') }}" class="btn btn-info mt-4">Descargar Plantilla</a>
-                    <form id="inventarioForm" action="{{ route('cargarInventario') }}" method="post" enctype="multipart/form-data">
+                    <form id="inventarioForm" action="{{ route('cargarInventario') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="archivoExcel" class="h4 mt-3">Selecciona el archivo Excel:</label>
                             <input type="file" class="form-control-file" id="archivoExcel" name="plantilla">
                         </div>
                         <div id="excel-table" class="mt-3"></div>
-                        <button type="button" class="btn btn-danger" id="cancelarCarga" style="display: none;" disabled>Cancelar Carga</button>
+                        <button type="button" class="btn btn-danger" id="cancelarCarga" style="display: none;" disabled>Carga</button>
                         <button type="submit" class="btn btn-primary" id="cargarInventario" style="display: none;" disabled>Cargar Inventario</button>
                     </form>
                 </div>
@@ -87,6 +90,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@latest"></script>
 
     <script>
+
         function readExcel(file) {
             const reader = new FileReader();
 
@@ -111,6 +115,7 @@
                     $('#cargarInventario').show().prop('disabled', false);
                     
                     $('#excel-table').html(table);
+
                 } else {
                     $('#cancelarCarga').show().prop('disabled', false);
                     $('#cargarInventario').hide().prop('disabled', true);
@@ -119,6 +124,7 @@
             };
 
             reader.readAsBinaryString(file);
+
         }
 
         // valida si hay mas filas aparte de la cabecera
@@ -187,11 +193,12 @@
             const archivoInput = document.getElementById('archivoExcel');
             const archivoRuta = archivoInput.value;
             const extPermitidas = /(.xlsx)$/i;
-            
+
             if (file && extPermitidas.exec(archivoRuta)) {
                 readExcel(file);
+
             } else {
-                
+
                 $('#cancelarCarga').hide().prop('disabled', true);
                 $('#cargarInventario').hide().prop('disabled', true);
                 $('#excel-table').html('');
@@ -231,68 +238,52 @@
             }
         });
 
-        // insertar datos del archivo excel a la base de datos
-        $('#inventarioForm').on('submit', function (e) {
-            e.preventDefault();
+        // extracción de los datos de la tabla
+        function getTableData() {
+            const rows = $('#excel-table tbody tr');
+            const jsonData = [];
 
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: "¡No podrás revertir esto!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Get the data from the table
-                    const rows = $('#excel-table tbody tr').map(function() {
-                        return $(this).find('td').map(function() {
-                            return $(this).text();
-                        }).get();
-                    }).get();
+            rows.each(function () {
+                const inputs = $(this).find('input');
+                const rowData = {};
 
-                    // Create an array to store the product data
-                    const products = [];
+                inputs.each(function (index) {
+                    const columnName = $('#excel-table thead th').eq(index).text().trim(); // Obtener el nombre de la columna desde el encabezado
+                    const columnValue = $(this).val();
 
-                    // Extract and format the data
-                    rows.forEach(function(row) {
-                        products.push({
-                            nombre: row[0],
-                            descripcion: row[1],
-                            precio_venta: row[2],
-                            stock_minimo: row[3],
-                            cantidad_sugerida: row[4],
-                            // Add other fields as needed
-                        });
-                    });
+                    rowData[columnName] = columnValue;
+                });
 
-                    // Send the product data to the server using AJAX
-                    $.ajax({
-                        type: 'POST',
-                        url: '/cargar-inventario',
-                        data: {
-                            _token: $('input[name="_token"]').val(),
-                            products: products,
-                        },
-                        success: function(response) {
-                            Swal.fire(
-                                '¡Cargado!',
-                                'El archivo ha sido cargado.',
-                                'success'
-                            )
-                        },
-                        error: function(error) {
-                            Swal.fire(
-                                'Error',
-                                'Hubo un problema al cargar el archivo.',
-                                'error'
-                            )
-                        }
-                    });
-                }
+                jsonData.push(rowData);
+            });
+
+            return jsonData;
+        }
+
+
+
+        // evento para cargar el inventario
+        $('#cargarInventario').on('click', function () {
+            const datos = getTableData();
+           
+            //alert(JSON.stringify(datos));
+            $.ajax({
+                url: "{{ route('cargarInventario') }}",
+                method: "POST",
+                data: JSON.stringify(datos),
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR);
+                    //alert('Error: ' + textStatus + ' ' + errorThrown);
+                },
+                dataType: 'json',
             });
         });
-
 
     </script>
 
