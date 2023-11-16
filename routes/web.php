@@ -92,5 +92,5 @@ Route::get('/plantilla', function () {
 })->name('plantillaInventario');
 
 // cargar el nuevo inventario
-Route::post('/cargar-inventario', [App\Http\Controllers\ProductController::class, 'cargarInventario'])->name('cargarInventario'); // pruebas :D
+Route::post('/inventario', [ProductController::class, 'cargarInventario'])->name('cargarInventario');
 

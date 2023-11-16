@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Categoria;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -103,5 +103,27 @@ class ProductController extends Controller
     }
 
     // cargar inventario por lotes
-    
+    public function cargarInventario(Request $request)
+    {
+        // JSON
+        $productos = $request->json()->all();
+
+        foreach ($productos as $productData) {
+            // Crear un nuevo objeto Product con los datos recibidos
+            Product::create([
+                'id_categoria' => 1,
+                'nombre' => $productData['nombre'],
+                'descripcion' => $productData['descripcion'],
+                'cantidad' => 0,
+                'precio_venta' => $productData['precio_venta'],
+                'stock_minimo' => $productData['stock_minimo'],
+                'cantidad_sugerida' => $productData['cantidad_sugerida'],
+                'estado' => "Desactivo",
+            ]);
+        }
+
+        // muestra el json
+        //return response()->json($productos);
+        return redirect()->route('products')->with('success', 'Inventario cargado exitosamente');
+    }
 }
