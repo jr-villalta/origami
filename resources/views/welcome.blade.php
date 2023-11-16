@@ -65,7 +65,7 @@
                         </li>
                         <li class="nav-item">
                         @if (Route::has('register'))
-                                    <a class="nav-link active" aria-current="page" href="{{ route('register') }}">Registrarse</a>
+                            <a class="nav-link active" aria-current="page" href="{{ route('register') }}">Registrarse</a>
                                 @endif
                         @endauth
                         </li>
@@ -105,12 +105,12 @@
                     <h5 class="card-title">Categorías</h5>
                     <ul class="list-group list-group-flush">
                     @if($categorias->count() > 0)
-    @foreach($categorias as $categoria)
-        <li class="list-group-item">{{ $categoria->nombre }}</li>
-    @endforeach
-@else
-    <!-- Mensaje o contenido alternativo si no hay categorías -->
-@endif
+                        @foreach($categorias as $categoria)
+                            <li class="list-group-item">{{ $categoria->nombre }}</li>
+                        @endforeach
+                    @else
+                        <!-- Mensaje o contenido alternativo si no hay categorías -->
+                    @endif
 
                     </ul>
                 </div>
@@ -122,13 +122,27 @@
             <div class="row">
                 @foreach($products as $item)
                     @if($item->estado === 'Activo')
-                        <div class="col-md-4 col-sm-6">
+                        <div class="container-fluid col-md-4 col-sm-6">
                             <div class="card mb-3">
                                 <a href="#">
                                     @if ($item->imagen)
                                         <img src="" class="card-img-top" alt="{{ $item->nombre }}">
                                     @else
-                                        <img src="https://via.placeholder.com/50x50" class="card-img-top" alt="Imagen no disponible">
+                                        <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false" data-bs-interval="false">
+                                            <div class="carousel-inner">
+                                                <div class="carousel-item active">
+                                                    <img src="https://via.placeholder.com/50x50" class="d-block w-100 card-img-top" alt="Imagen no disponible">
+                                                </div>
+                                            </div>
+                                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Previous</span>
+                                            </button>
+                                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Next</span>
+                                            </button>
+                                        </div>  
                                     @endif
                                 </a>
                                 <div class="card-body">
