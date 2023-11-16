@@ -122,8 +122,8 @@
             <div class="row">
                 @foreach($products as $item)
                     @if($item->estado === 'Activo')
-                        <div class="container-fluid col-md-4 col-sm-6">
-                            <div class="card mb-3">
+                        <div class="col-sm-6 col-md-3 col-1">
+                            <div class="card mb-2">
                                 <a href="#">
                                     @if ($item->imagen)
                                         <img src="" class="card-img-top" alt="{{ $item->nombre }}">
@@ -148,9 +148,8 @@
                                 <div class="card-body">
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item"><h5 class="card-title">{{ $item->nombre }}</h5></li>
-                                        <li class="list-group-item"><p class="card-text">{{ $item->cantidad }} disponible</p></li>
                                         <li class="list-group-item"><p class="card-text">${{ $item->precio_venta }}</p></li>
-                                        <li class="list-group-item"><a href="#" class="btn btn-primary d-flex justify-content-center align-items-center"><i class="fas fa-shopping-cart p-1" type="button"></i> Agregar al carrito</a></p></li>
+                                        <li class="list-group-item container-fluid"><a href="#" class="btn btn-primary d-flex justify-content-center align-items-center"><i class="fas fa-shopping-cart p-1" type="button"></i> Agregar al carrito</a></p></li>
                                     </ul>
                                 </div>
                             </div>
