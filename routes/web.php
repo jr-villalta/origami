@@ -4,8 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ProductController;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\ComprasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,7 +61,9 @@ Route::middleware('auth')->group(function () {
         Route::delete('destroy/{id}', 'destroy')->name('categorias.destroy');
     });
 
-    // Quiero solo mostrar en la sidebar el diseño de inventario (no tiene que llevar InventarioController por que no existe)
+    Route::controller(ComprasController::class)->prefix('inventario')->group(function () {
+        Route::post('guardarCompra', 'guardarCompra')->name('guardarCompra');
+    });
 
 });
 
@@ -94,3 +95,4 @@ Route::get('/plantilla', function () {
 // cargar el nuevo inventario
 Route::post('/inventario', [ProductController::class, 'cargarInventario'])->name('cargarInventario');
 
+Route::get('/inventario', [ComprasController::class, 'index'])->name('inventario');

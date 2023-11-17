@@ -3,13 +3,9 @@
 @section('title', 'Inventario')
 
 @section('contents')
-<head>
-
-</head>
-    <div class="d-flex align-items-center justify-content-between">
-        <h1 class="mb-0">Inventario de Productos</h1>
-    </div>
-    <hr />
+    <head>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css" rel="stylesheet" />
+    </head>
 
     <div class="container-fluid">
         <ul class="nav nav-tabs mt-2" id="myTabs" role="tablist">
@@ -50,7 +46,75 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
-                
+                <form action="{{ route('guardarCompra') }}" method="POST" class="m-2">
+                    @csrf
+                    <div class="row gx-2 mt-3">
+                        <hr />
+                        <div class="col-md-4 col-sm-12">
+                            <label for="id_producto" class="form-label">Producto</label>
+                            <select id="pickerProducto" name="id_producto" class="form-select selectpicker" data-live-search="true" required>
+                                <option value="" disabled>Selecciona un producto</option>
+                                @foreach($products as $producto)
+                                    <option value="{{ $producto->id }}" {{ $producto->id }}>
+                                        {{ $producto->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-2 col-sm-6 mb-2">
+                            <input type="number" name="cantidad" class="form-control" placeholder="Cantidad" required min="0" step="1">
+                        </div>
+                        
+                        <div class="col-md-2 col-sm-6 mb-2">
+                            <input type="number" name="costo" class="form-control" placeholder="Costo del producto" required min="0" step="0.01">
+                        </div>
+                        
+                        <div class="col-md-2 col-sm-6 mb-2">
+                            <input type="text" name="proveedor" class="form-control" placeholder="Proveedor del producto" required>
+                        </div>
+
+                        <div class="col-md-2 col-sm-6 mb-2">
+                            <button type="submit" class="btn btn-primary">Guardar Compra</button>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="mt-3">
+                    <h4>Historial de Compras</h4>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                    <th>Costo ($)</th>
+                                    <th>Proveedor</th>
+                                    <th>Fecha</th>
+                                    <th>Total ($)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if(isset($compras) && count($compras) > 0)
+                                    @foreach($compras as $compra)
+                                        <tr>
+                                            <td>{{ $compra->id }}</td>
+                                            <td>{{ $compra->producto->nombre }}</td>
+                                            <td>{{ $compra->cantidad }}</td>
+                                            <td>{{ $compra->costo }}</td>
+                                            <td>{{ $compra->proveedor }}</td>
+                                            <td>{{ $compra->created_at }}</td>
+                                            <td>{{ $compra->cantidad * $compra->costo }}</td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <p>No hay compras registradas</p>
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
             <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
                 
@@ -88,6 +152,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js"></script>
 
     <script>
 
@@ -260,8 +326,6 @@
             return jsonData;
         }
 
-
-
         // evento para cargar el inventario
         $('#cargarInventario').on('click', function () {
             const datos = getTableData();
@@ -286,5 +350,6 @@
         });
 
     </script>
+
 
 @endsection

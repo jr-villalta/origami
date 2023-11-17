@@ -126,4 +126,11 @@ class ProductController extends Controller
         //return response()->json($productos);
         return redirect()->route('products')->with('success', 'Inventario cargado exitosamente');
     }
+
+    // enviar productos a inventario
+    public function indexInventario()
+    {
+        $products = Product::all();
+        return view('inventario.index', compact('products'));
+    }
 }
