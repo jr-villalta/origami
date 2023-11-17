@@ -4,10 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\ComprasController;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\ConfiguracionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +66,11 @@ Route::middleware('auth')->group(function () {
 
     Route::controller(ComprasController::class)->prefix('inventario')->group(function () {
         Route::post('guardarCompra', 'guardarCompra')->name('guardarCompra');
+    });
+
+    Route::controller(ConfiguracionController::class)->prefix('configuracion')->group(function () {
+        Route::get('/', 'index')->name('configuracion.index');
+        Route::post('update', 'update')->name('configuracion.update');
     });
 
 });
