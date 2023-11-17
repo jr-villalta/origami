@@ -58,7 +58,7 @@ class ProductController extends Controller
   
         return view('products.edit', compact('product', 'categorias'));
     }
-  
+
     /**
      * Update the specified resource in storage.
      */
@@ -89,8 +89,18 @@ class ProductController extends Controller
         $products = $products->paginate(6);
         $categorias = Categoria::all();
         return view('welcome', compact('products', 'categorias'));	
-        
     }
+    
+    public function mostrarCategoria(string $cate)
+    {
+        $products = Product::where('estado', '=', 'Activo');
+        $idCategoria = Categoria::where('nombre', '=', $cate)->value('id');
+        $products = $products->where('id_categoria', '=', $idCategoria);
+        $products = $products->paginate(6);
+        $categorias = Categoria::all();
+        return view('products.filtrados', compact('products', 'categorias'));	
+    }
+
 
     // mostrar estado de producto
     public function toggleStatus($id)

@@ -14,7 +14,7 @@
 
     </head>
     <body class="antialiased">
-        @include('navbar')
+    @include('navbar')
 
         <div class="container-fluid p-1">
         <!-- Categorias y Productos -->
@@ -25,6 +25,8 @@
                 <div class="card-body">
                     <h5 class="card-title">Categorías</h5>
                     <ul class="list-group list-group-flush">
+                        <a href="/" class="list-group-item list-group-item-action">
+                            Mostrar todos los productos</a>
                     @if($categorias->count() > 0)
                         @foreach($categorias as $categoria)
                         <a href="{{ route('products.filtrados', ['categoria' => $categoria->nombre]) }}" class="list-group-item list-group-item-action">
