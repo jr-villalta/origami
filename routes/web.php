@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\EmpresaController;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 
