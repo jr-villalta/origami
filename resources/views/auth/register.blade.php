@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Origami - Registro</title>
 
     <!-- Enlaces a estilos y scripts -->
@@ -26,14 +27,14 @@
                             </div>
 
                             <!-- Formulario de Registro -->
-                            <form action="{{ route('register.save') }}" method="POST" class="user">
-                                @csrf
+                            <form class="user" data-route="{{ route('register.save') }}">
                                 <!-- Sección 1 -->
                                 <div class="section" id="section1">
                                     <!-- Correo Electrónico -->
                                     <div class="mb-3">
                                         <label for="correo" class="form-label">Correo Electrónico</label>
-                                        <input type="email" class="form-control" id="correo" name="correo" required>
+                                        <input type="email" class="form-control" id="correo" name="email" required>
+                                        <div class="invalid-feedback" id="emailError">Por favor, introduce una dirección de correo válida.</div>                                        
                                     </div>
 
                                     <!-- Tipo de cuenta -->
@@ -60,19 +61,23 @@
                                     <!-- Campos según el tipo de cuenta -->
                                     <div class="mb-3" id="nombreFields">
                                         <label id="nombreLabel" for="nombre" class="form-label">Nombre</label>
-                                        <input type="text" class="form-control" id="nombre" name="nombre">
+                                        <input type="text" class="form-control" id="nombre" name="name" require>
+                                        <div class="invalid-feedback" id="nameError">Por favor, introduce tu nombre.</div>
                                     </div>
                                     <div class="mb-3" id="razonSocialFields" style="display: none;">
                                         <label for="razonSocial" class="form-label">Razón Social</label>
                                         <input type="text" class="form-control" id="razonSocial" name="razonSocial">
+                                        <div class="invalid-feedback" id="razonSocialError">Error</div>                                        
                                     </div>
                                     <div class="mb-3" id="giroFields" style="display: none;">
                                         <label for="giro" class="form-label">Giro</label>
                                         <input type="text" class="form-control" id="giro" name="giro">
+                                        <div class="invalid-feedback" id="giroError">Error</div>                                        
                                     </div>
                                     <div class="mb-3" id="nitFields" style="display: none;">
                                         <label for="nit" class="form-label">NIT</label>
                                         <input type="text" class="form-control" id="nit" name="nit">
+                                        <div class="invalid-feedback" id="nitError">Error</div>                                        
                                     </div>
                                     <div class="mb-3 form-check" id="exentoIvaFields" style="display: none;">
                                         <input type="checkbox" class="form-check-input" id="exentoIva" name="exentoIva" onclick="toggleRegistroIva()">
@@ -81,19 +86,20 @@
                                     <div class="mb-3" id="registroIvaFields" style="display: none;">
                                         <label for="registroIva" class="form-label">Registro de IVA</label>
                                         <input type="text" class="form-control" id="registroIva" name="registroIva">
+                                        <div class="invalid-feedback" id="registroIvaError">Error</div>                                        
                                     </div>
                                     <div class="mb-3" id="passwordFields">
                                         <label for="password" class="form-label">Contraseña</label>
                                         <div class="input-group">
-                                            <input type="password" class="form-control" id="password" name="password">
-                                            <button class="btn btn-outline-secondary" type="button" id="togglePassword" onclick="togglePasswordVisibility('password')"><i class="fas fa-eye"></i></button>
+                                            <input type="password" class="form-control" id="password" name="password" require>
+                                            <div class="invalid-feedback" id="passwordError">La contraseña es obligatoria.</div>
                                         </div>
                                     </div>
                                     <div class="mb-3" id="confirmPasswordFields">
                                         <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
                                         <div class="input-group">
-                                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword">
-                                            <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword" onclick="togglePasswordVisibility('confirmPassword')"><i class="fas fa-eye"></i></button>
+                                            <input type="password" class="form-control" id="confirmPassword" name="password_confirmation" require>
+                                            <div class="invalid-feedback" id="confirmPasswordError">Por favor, confirma tu contraseña.</div>
                                         </div>
                                     </div>
 
@@ -128,118 +134,273 @@
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('admin_assets/js/sb-admin-2.min.js') }}"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         let currentSection = 1;
 
-        function nextSection() {
-            if (currentSection < 2) {
-                currentSection++;
-                showSection(currentSection);
-            }
-        }
-
-        function showSection(section) {
-            for (let i = 1; i <= 2; i++) {
-                document.getElementById('section' + i).style.display = 'none';
-            }
-            document.getElementById('section' + section).style.display = 'block';
-        }
-
-        // Mostrar u ocultar campos según el tipo de cuenta seleccionado
-        document.querySelectorAll('input[name="tipoCuenta"]').forEach(function (radio) {
-            radio.addEventListener('change', function () {
-                const tipoCuenta = document.querySelector('input[name="tipoCuenta"]:checked').value;
-                toggleFields(tipoCuenta);
-            });
-        });
-
-        function toggleFields(tipoCuenta) {
-            const nombreFields = document.getElementById('nombreFields');
-            const razonSocialFields = document.getElementById('razonSocialFields');
-            const giroFields = document.getElementById('giroFields');
-            const nitFields = document.getElementById('nitFields');
-            const exentoIvaFields = document.getElementById('exentoIvaFields');
-            const registroIvaFields = document.getElementById('registroIvaFields');
-            
-            // Ocultar todos los campos
-            nombreFields.style.display = 'none';
-            razonSocialFields.style.display = 'none';
-            giroFields.style.display = 'none';
-            nitFields.style.display = 'none';
-            exentoIvaFields.style.display = 'none';
-            registroIvaFields.style.display = 'none';
-
-            // Mostrar campos según el tipo de cuenta
-            if (tipoCuenta === 'personaNatural') {
-                nombreFields.style.display = 'block';
-            } else if (tipoCuenta === 'empresa') {
-              const nombreLabel = document.getElementById('nombreLabel');
-              // Restablecer texto predeterminado
-              nombreLabel.innerText = 'Nombre Comercial';
-
-
-                nombreFields.style.display = 'block';
-                razonSocialFields.style.display = 'block';
-                giroFields.style.display = 'block';
-                nitFields.style.display = 'block';
-                exentoIvaFields.style.display = 'block';
-                toggleRegistroIva();
-            }
-        }
-
-        // Mostrar u ocultar campo de registro de IVA según checkbox
-        function toggleRegistroIva() {
-            const registroIvaFields = document.getElementById('registroIvaFields');
-            const exentoIvaCheckbox = document.getElementById('exentoIva');
-
-            if (exentoIvaCheckbox.checked) {
-                registroIvaFields.style.display = 'none';
-            } else {
-                registroIvaFields.style.display = 'block';
-            }
-        }
-
-        // Mostrar/Ocultar contraseña
-        function togglePasswordVisibility(fieldId) {
-            const field = document.getElementById(fieldId);
-            const fieldType = field.getAttribute('type');
-            if (fieldType === 'password') {
-                field.setAttribute('type', 'text');
-            } else {
-                field.setAttribute('type', 'password');
-            }
-        }
-
-        function submitForm() {
+    function validateForm() {
         const tipoCuenta = document.querySelector('input[name="tipoCuenta"]:checked').value;
 
-        if (tipoCuenta === 'personaNatural') {
-            // Procesar datos para persona natural (nombre, correo, contraseña)
-            const nombre = document.getElementById('nombre').value;
-            const correo = document.getElementById('correo').value;
-            const password = document.getElementById('password').value;
+        const emailValid = validateEmail();
+        const nameValid = validateName();
+        const passwordValid = validatePassword();
+        const confirmPasswordValid = validateConfirmPassword();
 
-            // Realizar las acciones necesarias con estos datos (puedes enviarlos al controlador, mostrar en un alert, etc.)
-            alert(`Persona Natural\nNombre: ${nombre}\nCorreo: ${correo}\nContraseña: ${password}`);
-        } else if (tipoCuenta === 'empresa') {
-            // Procesar datos para empresa (nombre, razón social, giro, NIT, etc.)
-            const nombre = document.getElementById('nombre').value;
-            const razonSocial = document.getElementById('razonSocial').value;
-            const giro = document.getElementById('giro').value;
-            const nit = document.getElementById('nit').value;
-            const password = document.getElementById('password').value;
-
-            // Verificar si está exento de IVA
+        if (tipoCuenta === 'empresa') {
+            const razonSocialValid = validateField('razonSocial');
+            const giroValid = validateField('giro');
+            const nitValid = validateField('nit');
             const exentoIva = document.getElementById('exentoIva').checked;
-            let registroIva = 'Exento de IVA';
-            if (!exentoIva) {
-                registroIva = document.getElementById('registroIva').value;
-            }
 
-            // Realizar las acciones necesarias con estos datos (puedes enviarlos al controlador, mostrar en un alert, etc.)
-            alert(`Empresa\nNombre comercial: ${nombre}\nRazón Social: ${razonSocial}\nGiro: ${giro}\nNIT: ${nit}\nExento de IVA: ${exentoIva ? 'Sí' : 'No'}\nRegistro IVA: ${registroIva}\nContraseña: ${password}`);
+            if (!exentoIva) {
+                const registroIvaValid = validateField('registroIva');
+                return emailValid && nameValid && passwordValid && confirmPasswordValid &&
+                       razonSocialValid && giroValid && nitValid && registroIvaValid;
+            } else {
+                return emailValid && nameValid && passwordValid && confirmPasswordValid &&
+                       razonSocialValid && giroValid && nitValid;
+            }
+        } else {
+            return emailValid && nameValid && passwordValid && confirmPasswordValid;
         }
     }
+
+    function validateField(fieldId) {
+        const field = document.getElementById(fieldId);
+        const isValid = field.value.trim() !== '';
+
+        const errorElement = document.getElementById(`${fieldId}Error`);
+        errorElement.textContent = isValid ? '' : `Por favor, introduce ${fieldId === 'registroIva' ? 'el Registro de IVA' : 'este campo'}.`;
+
+        if (!isValid) {
+            field.classList.add('is-invalid');
+        } else {
+            field.classList.remove('is-invalid');
+        }
+
+        return isValid;
+    }
+
+    function updateErrorMessage(elementId, errorMessage) {
+        const errorElement = document.getElementById(elementId);
+        errorElement.textContent = errorMessage;
+    }
+
+    function validateEmail() {
+        const emailInput = document.getElementById('correo');
+        const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value);
+        updateErrorMessage('emailError', isValid ? '' : 'Por favor, introduce una dirección de correo válida.');
+        if (!isValid) {
+            emailInput.classList.add('is-invalid');
+        } else {
+            emailInput.classList.remove('is-invalid');
+        }
+        return isValid;
+    }
+
+    function validateName() {
+        const nameInput = document.getElementById('nombre');
+        const isValid = nameInput.value.trim() !== '';
+        updateErrorMessage('nameError', isValid ? '' : 'Por favor, introduce tu nombre.');
+        if (!isValid) {
+            nameInput.classList.add('is-invalid');
+        } else {
+            nameInput.classList.remove('is-invalid');
+        }
+        return isValid;
+    }
+
+    function validatePassword() {
+        const passwordInput = document.getElementById('password');
+        const isValid = passwordInput.value.trim() !== '';
+        updateErrorMessage('passwordError', isValid ? '' : 'La contraseña es obligatoria.');
+        if (!isValid) {
+            passwordInput.classList.add('is-invalid');
+        } else {
+            passwordInput.classList.remove('is-invalid');
+        }
+        return isValid;
+    }
+
+    function validateConfirmPassword() {
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const isEgual = confirmPasswordInput.value === passwordInput.value;
+        const isEmpy = passwordInput.value.trim() !== '';
+        const isValid = isEgual && isEmpy;
+        updateErrorMessage('confirmPasswordError', isValid ? '' : 'Por favor, confirma tu contraseña.');
+        if (!isValid) {
+            confirmPasswordInput.classList.add('is-invalid');
+        } else {
+            confirmPasswordInput.classList.remove('is-invalid');
+        }
+        return isValid;
+    }
+
+    function nextSection() {
+        const isEmailValid = validateEmail();
+
+        if(isEmailValid){
+        if (currentSection < 2) {
+            currentSection++;
+            showSection(currentSection);
+        }
+        }
+    }
+
+    function showSection(section) {
+        for (let i = 1; i <= 2; i++) {
+            document.getElementById('section' + i).style.display = 'none';
+        }
+        document.getElementById('section' + section).style.display = 'block';
+    }
+
+        // Mostrar u ocultar campos según el tipo de cuenta seleccionado
+    document.querySelectorAll('input[name="tipoCuenta"]').forEach(function (radio) {
+        radio.addEventListener('change', function () {
+            const tipoCuenta = document.querySelector('input[name="tipoCuenta"]:checked').value;
+            toggleFields(tipoCuenta);
+        });
+    });
+
+    function toggleFields(tipoCuenta) {
+        const nombreFields = document.getElementById('nombreFields');
+        const razonSocialFields = document.getElementById('razonSocialFields');
+        const giroFields = document.getElementById('giroFields');
+        const nitFields = document.getElementById('nitFields');
+        const exentoIvaFields = document.getElementById('exentoIvaFields');
+        const registroIvaFields = document.getElementById('registroIvaFields');
+        
+        // Ocultar todos los campos
+        nombreFields.style.display = 'none';
+        razonSocialFields.style.display = 'none';
+        giroFields.style.display = 'none';
+        nitFields.style.display = 'none';
+        exentoIvaFields.style.display = 'none';
+        registroIvaFields.style.display = 'none';
+
+        // Mostrar campos según el tipo de cuenta
+        if (tipoCuenta === 'personaNatural') {
+            nombreFields.style.display = 'block';
+        } else if (tipoCuenta === 'empresa') {
+            const nombreLabel = document.getElementById('nombreLabel');
+            // Restablecer texto predeterminado
+            nombreLabel.innerText = 'Nombre Comercial';
+
+
+            nombreFields.style.display = 'block';
+            razonSocialFields.style.display = 'block';
+            giroFields.style.display = 'block';
+            nitFields.style.display = 'block';
+            exentoIvaFields.style.display = 'block';
+            toggleRegistroIva();
+        }
+    }
+
+    // Mostrar u ocultar campo de registro de IVA según checkbox
+    function toggleRegistroIva() {
+        const registroIvaFields = document.getElementById('registroIvaFields');
+        const exentoIvaCheckbox = document.getElementById('exentoIva');
+
+        if (exentoIvaCheckbox.checked) {
+            registroIvaFields.style.display = 'none';
+        } else {
+            registroIvaFields.style.display = 'block';
+        }
+    }
+
+    // Mostrar/Ocultar contraseña
+    function togglePasswordVisibility(fieldId) {
+        const field = document.getElementById(fieldId);
+        const fieldType = field.getAttribute('type');
+        if (fieldType === 'password') {
+            field.setAttribute('type', 'text');
+        } else {
+            field.setAttribute('type', 'password');
+        }
+    }
+
+    function submitForm() {
+        const isFormValid = validateForm();
+
+        if (isFormValid) { 
+        const tipoCuenta = document.querySelector('input[name="tipoCuenta"]:checked').value;
+        const formData = new FormData();
+
+        // Agregar campos comunes a todos los tipos de cuenta
+        // formData.append('_token', '{{ csrf_token() }}');
+        formData.append('email', document.getElementById('correo').value);
+        formData.append('password', document.getElementById('password').value);
+
+        if (tipoCuenta === 'personaNatural') {
+            // Agregar campos específicos para persona natural
+            formData.append('email', document.getElementById('correo').value);
+            formData.append('name', document.getElementById('nombre').value);
+            formData.append('es_empresa', 0);
+
+        } else if (tipoCuenta === 'empresa') {
+            // Agregar campos específicos para empresa
+            formData.append('es_empresa', 1);
+            formData.append('name', document.getElementById('nombre').value);
+            formData.append('razon_social', document.getElementById('razonSocial').value);
+            formData.append('giro', document.getElementById('giro').value);
+            formData.append('nit', document.getElementById('nit').value);
+            formData.append('exenta_iva', document.getElementById('exentoIva').checked ? 1 : 0);
+            if (!document.getElementById('exentoIva').checked) {
+                formData.append('registro_iva', document.getElementById('registroIva').value);
+            }
+        }
+
+        // Obtener la URL de la ruta desde el atributo de datos
+        const formElement = document.querySelector('.user');
+        const route = formElement.dataset.route;
+
+                // Realizar la petición AJAX
+        const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+        
+        fetch(route, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRF-TOKEN': csrfToken
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                console.error(response);
+                console.error();(`HTTP error! Status: ${response.status}`);
+                Swal.fire({
+                    icon: 'error',
+                    title: '¡Error!',
+                    text: 'Hubo un error al procesar la solicitud',
+                    showConfirmButton: false,
+                    timer: 2500
+                })
+                .then((result) => {
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        window.location.href = "{{ route('register') }}";
+                    }
+                });
+            } else {
+            Swal.fire({
+                    icon: 'success',
+                    title: '¡Registro exitoso!',
+                    text: 'Ahora puedes iniciar sesión',
+                    showConfirmButton: false,
+                    timer: 2500
+                }).then((result) => {
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        window.location.href = "{{ route('login') }}";
+                    }
+                });
+            }
+            })
+        .catch(error => {
+            console.error('Error:', error);
+        });   
+    }  
+}
     </script>
+    
 </body>
 </html>

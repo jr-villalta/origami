@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
   
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Empresa;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -18,21 +19,25 @@ class AuthController extends Controller
   
     public function registerSave(Request $request)
     {
-        Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|confirmed'
-        ])->validate();
-  
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'level' => 'User'
+    User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'es_empresa' => $request->es_empresa,
+        'password' => Hash::make($request->password),
+        'level' => 'User'
+    ]);
+
+    if($request->es_empresa == 1){
+        Empresa::create([
+            'user_email' => $request->email,
+            'razon_social' => $request->razon_social,
+            'giro' => $request->giro,
+            'nit' => $request->nit,
+            'exenta_iva' => $request->exenta_iva,
+            'registro_iva' => $request->registro_iva
         ]);
-  
-        return redirect()->route('login');
     }
+}
   
     public function login()
     {
