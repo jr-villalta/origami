@@ -38,7 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::get('dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
- 
+    
     Route::controller(ProductController::class)->prefix('products')->group(function () {
         Route::get('', 'index')->name('products');
         Route::get('create', 'create')->name('products.create');
@@ -77,6 +77,7 @@ Route::middleware('auth')->group(function () {
 
 // utiliza el metodo mostrarTodos del ProductController.php en welcome.blade.php para mostrar todos los productos
 Route::get('/', [App\Http\Controllers\ProductController::class, 'mostrarTodos'])->name('welcome');
+Route::get('products/{categoria}', [App\Http\Controllers\ProductController::class, 'mostrarCategoria'])->name('products.filtrados');
 
 // Guardar perfil
 Route::post('/profile/update', [AuthController::class, 'updateProfile'])->name('profile.update');
