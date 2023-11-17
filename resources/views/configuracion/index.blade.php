@@ -66,7 +66,7 @@
             <!-- iva -->
             <div class="form-group">
                 <label for="iva">IVA</label>
-                <input type="text" name="iva" class="form-control" value="{{ old('iva', $configuracion->iva ?? '') }}" placeholder="iva (opcional)">
+                <input type="text" name="iva" class="form-control" value="{{ old('iva', $configuracion->iva ?? '') }}" placeholder="iva (opcional)" min="0" step="0.01">
                 @error('iva')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
