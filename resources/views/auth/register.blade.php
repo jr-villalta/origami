@@ -237,15 +237,49 @@
         return isValid;
     }
 
-    function nextSection() {
-        const isEmailValid = validateEmail();
+    async function nextSection() {
+    const isEmailValid = validateEmail();
+    const emailInput = document.getElementById('correo');
+    
+    try {
+        const { duplicate } = await checkDuplicateEmail();
+        console.log(duplicate);
+        
+        if (duplicate) {
+            emailInput.classList.add('is-invalid');
+            updateErrorMessage('emailError', 'Este correo electrónico ya está registrado.');
+            return false; // Detener la validación si el correo ya está registrado
+        }
+        
+        emailInput.classList.remove('is-invalid');
+        if (isEmailValid && currentSection) {
+            if (currentSection < 2) {
+                currentSection++;
+                showSection(currentSection);
+            }
+        }
+    } catch (error) {
+        console.error('Error al verificar duplicidad de correo electrónico:', error);
+    }
+    }
 
-        if(isEmailValid){
-        if (currentSection < 2) {
-            currentSection++;
-            showSection(currentSection);
-        }
-        }
+    function checkDuplicateEmail() {
+        const email = document.getElementById('correo').value;
+        const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+
+        return fetch('/check-duplicate-email', {
+            method: 'POST',
+            body: JSON.stringify({ email: email }),
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken
+            },
+        })
+        .then(response => response.json())
+        .then(data => data)
+        .catch(error => {
+            console.error('Error:', error);
+        });
     }
 
     function showSection(section) {

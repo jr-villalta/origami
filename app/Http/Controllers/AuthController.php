@@ -16,6 +16,16 @@ class AuthController extends Controller
     {
         return view('auth/register');
     }
+
+    public function checkDuplicateEmail(Request $request)
+    {
+        $email = $request->input('email');
+
+        // Realiza la consulta en tu base de datos para verificar si el correo ya está registrado
+        $isDuplicate = User::where('email', $email)->exists();
+
+        return response()->json(['duplicate' => $isDuplicate]);
+    }
   
     public function registerSave(Request $request)
     {

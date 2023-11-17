@@ -24,9 +24,11 @@ Route::get('/', function () {
     return view('welcome');
 });
  
+
 Route::controller(AuthController::class)->group(function () {
     Route::get('register', 'register')->name('register');
     Route::post('register', 'registerSave')->name('register.save');
+    Route::post('/check-duplicate-email', 'checkDuplicateEmail')->name('checkDuplicateEmail');
   
     Route::get('login', 'login')->name('login');
     Route::post('login', 'loginAction')->name('login.action');
