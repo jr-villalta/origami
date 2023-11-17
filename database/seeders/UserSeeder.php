@@ -15,8 +15,8 @@ class UserSeeder extends Seeder
     {
         \App\Models\User::create([
             'name' => 'admin',
-            'email' => 'admin',
-            'password' => Hash::make('vf19012@ues.edu.sv'),
+            'email' => 'vf19012@ues.edu.sv',
+            'password' => Hash::make('admin'),
             'level' => 'Admin'
         ]);
 
@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
             'name' => 'Cristian',
             'email' => 'ge190008@ues.edu.sv',
             'password' => Hash::make('admin'),
-            'level' => 'admin'
+            'level' => 'Admin'
         ]);
 
         // admin
