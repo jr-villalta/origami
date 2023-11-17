@@ -37,12 +37,6 @@
     </li>
 
     <li class="nav-item">
-      <a class="nav-link" href="#">
-        <i class=""></i>
-        <span>Clientes</span></a>
-    </li>
-
-    <li class="nav-item">
       <a class="nav-link" href="{{ route('inventario') }}">
         <i class=""></i>
         <span>Inventario</span></a>
