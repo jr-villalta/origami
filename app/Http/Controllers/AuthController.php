@@ -17,6 +17,11 @@ class AuthController extends Controller
         return view('auth/register');
     }
 
+    public function pasarela()
+    {
+        return view('pasarela');
+    }
+
     public function checkDuplicateEmail(Request $request)
     {
         $email = $request->input('email');
@@ -86,6 +91,7 @@ class AuthController extends Controller
         Auth::guard('web')->logout();
   
         $request->session()->invalidate();
+        session()->forget('carrito');
   
         return redirect('/');
     }
