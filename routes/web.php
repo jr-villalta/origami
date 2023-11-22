@@ -53,6 +53,8 @@ Route::middleware('auth')->group(function () {
         Route::post('edit/{id}', [ProductController::class, 'subirImagen'])->name('products.subirImagen');
         Route::delete('/eliminar-imagen/{id}', [ProductController::class, 'eliminarImagen'])->name('eliminar.imagen');
         Route::get('/agregar-al-carrito/{id}', [ProductController::class, 'agregarAlCarrito'])->name('agregar.al.carrito');
+        Route::get('/reducir-del-carrito/{id}', [ProductController::class, 'reducirCantidad'])->name('carrito.reducir');
+        Route::get('/eliminar-del-carrito/{id}', [ProductController::class, 'eliminarDelCarrito'])->name('carrito.eliminar');
     });
  
     Route::get('/profile', [App\Http\Controllers\AuthController::class, 'profile'])->name('profile');
@@ -81,6 +83,9 @@ Route::middleware('auth')->group(function () {
 // utiliza el metodo mostrarTodos del ProductController.php en welcome.blade.php para mostrar todos los productos
 Route::get('/', [App\Http\Controllers\ProductController::class, 'mostrarTodos'])->name('welcome');
 Route::get('products/{categoria}', [App\Http\Controllers\ProductController::class, 'mostrarCategoria'])->name('products.filtrados');
+
+// Pasarela de pago
+Route::get('/pasarela', [App\Http\Controllers\AuthController::class, 'pasarela'])->name('pasarela');
 
 // Guardar perfil
 Route::post('/profile/update', [AuthController::class, 'updateProfile'])->name('profile.update');
