@@ -69,12 +69,60 @@
             <!-- botón de carrito de compras -->
         </nav>
 
+        
         <div class="offcanvas offcanvas-end" tabindex="-1" id="cartSidebar" aria-labelledby="cartSidebarLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="cartSidebarLabel">Carrito de Compras</h5>
-                <Button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></Button>
-            </div>
-            <div class="offcanvas-body">
-                <!-- Contenido de tu carrito de compras aquí -->
-            </div>
-        </div>
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="cartSidebarLabel">Carrito de Compras</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        @php
+            $carrito = json_decode(Cookie::get('carrito'), true);
+            $total = 0;
+        @endphp
+
+        @if (!empty($carrito))
+            <ul class="list-group">
+                @foreach ($carrito as $key => $item)
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                @if(isset($item['imagen_producto']))
+                                    <img src="{{ asset('storage/' . $item['imagen_producto']) }}" alt="{{ $item['imagen_producto'] }}" class="img-thumbnail" style="width: 50px; height: 50px; object-fit: cover;">
+                                @else
+                                    <img src="{{ asset('public/images/INE.png') }}" alt="Imagen no disponible" class="img-thumbnail" style="width: 50px; height: 50px; object-fit: cover;">
+                                @endif
+                            </div>
+                            <div>
+                                <span>{{ $item['nombre_producto'] }}</span><br>
+                                <small>Cantidad: {{ $item['cantidad'] }}</small>
+                            </div>
+                            <div>
+                                <span class="badge bg-primary rounded-pill">${{ $item['precio_unitario'] * $item['cantidad'] }}</span>
+                            </div>
+                            <div>
+                                <button class="btn btn-danger rounded-pill">X</button>
+                            </div>
+                        </div>
+                    </li>
+                    @php
+                        $total += $item['precio_unitario'] * $item['cantidad'];
+                    @endphp
+                @endforeach
+            </ul>
+        @else
+            <p>No hay productos en el carrito.</p>
+        @endif
+
+        <!-- Total del carrito -->
+<div class="d-flex justify-content-between align-items-center mt-3">
+    <h5 class="mb-0">Total:</h5>
+    <h4 class="mb-0 text-primary">${{ $total }}</h4>
+</div>
+
+<!-- Botón de pago -->
+<div class="d-grid gap-2 mt-3">
+    <button type="button" class="btn btn-primary btn-lg">Proceder al Pago</button>
+</div>
+    </div>
+</div>

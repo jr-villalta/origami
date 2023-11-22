@@ -49,7 +49,10 @@ Route::middleware('auth')->group(function () {
         Route::delete('destroy/{id}', 'destroy')->name('products.destroy');
         Route::post('toggle-status/{id}', 'toggleStatus')->name('products.toggleStatus');
         //Route::get('/procesar-excel', 'procesarExcel')->name('products.procesarExcel');
-
+        // Subir imagen
+        Route::post('edit/{id}', [ProductController::class, 'subirImagen'])->name('products.subirImagen');
+        Route::delete('/eliminar-imagen/{id}', [ProductController::class, 'eliminarImagen'])->name('eliminar.imagen');
+        Route::get('/agregar-al-carrito/{id}', [ProductController::class, 'agregarAlCarrito'])->name('agregar.al.carrito');
     });
  
     Route::get('/profile', [App\Http\Controllers\AuthController::class, 'profile'])->name('profile');
