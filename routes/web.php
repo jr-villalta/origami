@@ -9,6 +9,7 @@ use App\Http\Controllers\ConfiguracionController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FacturaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -98,6 +99,9 @@ Route::post('/realizar-pedido', [PedidoController::class, 'realizarPedido'])->na
 
 // Mostrar pedidos
 Route::get('/pedidos', [PedidoController::class, 'index'])->name('pedidos.index');
+
+// Generar factura
+Route::get('factura/{idPedido}',[FacturaController::class ,'generarFactura'])->name('factura.generar');
 
 // Inventario
 Route::get('/inventario', function () {
