@@ -224,13 +224,15 @@ class ProductController extends Controller
 
     if ($productoExistente !== false) {
         // Verificar que al agregar la nueva cantidad no exceda el total disponible
-        $nuevaCantidad = $carritoActual[$productoExistente]['cantidad'] + $request->input('cantidad', 1);
+        if (isset($carritoActual[$productoExistente]['cantidad'])) {
+            $nuevaCantidad = $carritoActual[$productoExistente]['cantidad'] + $request->input('cantidad', 1);
 
-        if ($nuevaCantidad <= $producto->cantidad) {
-            // Actualizar la cantidad si no excede el total disponible
-            $carritoActual[$productoExistente]['cantidad'] = $nuevaCantidad;
-        } else {
-            $nuevaCantidad = $producto->cantidad;
+            if ($nuevaCantidad <= $producto->cantidad) {
+                // Actualizar la cantidad si no excede el total disponible
+                $carritoActual[$productoExistente]['cantidad'] = $nuevaCantidad;
+            } else {
+                $nuevaCantidad = $producto->cantidad;
+            }
         }
     } else {
         // Limitar la cantidad al total disponible
@@ -254,6 +256,7 @@ class ProductController extends Controller
 
     return redirect()->back();
 }
+
 
     public function reducirCantidad($productId) 
 {
