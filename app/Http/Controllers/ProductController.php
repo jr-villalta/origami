@@ -296,16 +296,18 @@ class ProductController extends Controller
     return redirect()->back();
 }
 
-public function search(Request $request)
+/*
+public function buscar(Request $request)
 {
     $query = $request->input('query');
 
-    $products = Product::where('nombre', 'like', "%$query%")
-        ->orWhere('descripcion', 'like', "%$query%")
-        ->orWhere('precio_venta', 'like', "%$query%")
-        ->paginate(12);
+    // Realiza la búsqueda en la base de datos, por ejemplo
+    $resultados = Product::where('nombre', 'LIKE', '%' . $query . '%')
+        ->orWhere('descripcion', 'LIKE', '%' . $query . '%')
+        ->get();
 
-    return;
+    return view('resultados', ['resultados' => $resultados, 'query' => $query]);
 }
+*/
 
 }

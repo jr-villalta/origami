@@ -20,7 +20,7 @@
                         @auth
                             <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Cuenta
+                                {{ auth()->user()->email }}
                             </a>
                             <ul class="dropdown-menu">
     @if (auth()->user()->level == 'Admin')
@@ -69,10 +69,12 @@
                         </li>
                     </ul>
                 @endif
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+                <!--
+                <form class="d-flex" action="" method="">
+                    <input class="form-control me-2" type="search" placeholder="Nombre o descripcion" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Buscar</button>
                 </form>
+                -->
                 </div>
                 <div class="d-flex">
                     <button class="btn btn-link" id="cartToggle" data-bs-toggle="offcanvas" href="#cartSidebar" aria-controls="cartSidebar">

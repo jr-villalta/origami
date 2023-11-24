@@ -128,7 +128,10 @@ Route::post('/inventario', [ProductController::class, 'cargarInventario'])->name
 Route::get('/inventario', [ComprasController::class, 'index'])->name('inventario');
 
 // buscar productos
-//Route::get('/products/search', 'ProductController@search')->name('products.search');
+//Route::get('/buscar', [ProductController::class, 'buscar'])->name('buscar');
 
 Route::post('/', [ContactController::class, 'submit'])->name('contact.submit');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+
+
