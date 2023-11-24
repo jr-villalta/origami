@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ComprasController;
 use App\Http\Controllers\ConfiguracionController;
+use App\Http\Controllers\PedidoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -89,6 +90,9 @@ Route::get('/pasarela', [App\Http\Controllers\AuthController::class, 'pasarela']
 
 // Guardar perfil
 Route::post('/profile/update', [AuthController::class, 'updateProfile'])->name('profile.update');
+
+// Realizar pedido
+Route::post('/realizar-pedido', [PedidoController::class, 'realizarPedido'])->name('realizar.pedido');
 
 // Inventario
 Route::get('/inventario', function () {

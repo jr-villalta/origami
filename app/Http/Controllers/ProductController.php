@@ -255,7 +255,7 @@ class ProductController extends Controller
     return redirect()->back();
 }
 
-public function reducirCantidad($productId) 
+    public function reducirCantidad($productId) 
 {
     // Obtener el carrito actual de la sesión
     $carritoActual = session('carrito') ? session('carrito') : [];
@@ -274,7 +274,7 @@ public function reducirCantidad($productId)
     return redirect()->back();
 }
 
-public function eliminarDelCarrito($productId) 
+    public function eliminarDelCarrito($productId) 
 {
     // Obtener el carrito actual de la sesión
     $carritoActual = session('carrito') ? session('carrito') : [];
@@ -292,6 +292,7 @@ public function eliminarDelCarrito($productId)
 
     return redirect()->back();
 }
+<<<<<<< HEAD
 
 public function search(Request $request)
 {
@@ -305,4 +306,7 @@ public function search(Request $request)
     return view('products.index', compact('products'));
 }
 
+=======
+    
+>>>>>>> b7fde6d6ff85e46810ba5d71c9b3c3afae6002ff
 }
