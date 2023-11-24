@@ -255,7 +255,7 @@ class ProductController extends Controller
     return redirect()->back();
 }
 
-public function reducirCantidad($productId) 
+    public function reducirCantidad($productId) 
 {
     // Obtener el carrito actual de la sesión
     $carritoActual = session('carrito') ? session('carrito') : [];
@@ -274,7 +274,7 @@ public function reducirCantidad($productId)
     return redirect()->back();
 }
 
-public function eliminarDelCarrito($productId) 
+    public function eliminarDelCarrito($productId) 
 {
     // Obtener el carrito actual de la sesión
     $carritoActual = session('carrito') ? session('carrito') : [];
@@ -293,5 +293,4 @@ public function eliminarDelCarrito($productId)
     return redirect()->back();
 }
     
-
 }

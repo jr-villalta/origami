@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Factura extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'id_pedido',
+        'estado',
+    ];
+
+    public function pedido()
+    {
+        return $this->belongsTo(Pedido::class, 'id_pedido');
+    }
 }
