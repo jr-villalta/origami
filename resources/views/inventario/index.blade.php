@@ -40,7 +40,7 @@
                             <input type="file" class="form-control-file" id="archivoExcel" name="plantilla">
                         </div>
                         <div id="excel-table" class="mt-3"></div>
-                        <button type="button" class="btn btn-danger" id="cancelarCarga" style="display: none;" disabled>Carga</button>
+                        <button type="button" class="btn btn-danger" id="cancelarCarga" style="display: none;" disabled>Cancelar Carga</button>
                         <button type="submit" class="btn btn-primary" id="cargarInventario" style="display: none;" disabled>Cargar Inventario</button>
                     </form>
                 </div>

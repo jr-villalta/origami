@@ -302,10 +302,10 @@ public function search(Request $request)
 
     $products = Product::where('nombre', 'like', "%$query%")
         ->orWhere('descripcion', 'like', "%$query%")
-        // Agrega más condiciones según sea necesario
+        ->orWhere('precio_venta', 'like', "%$query%")
         ->paginate(12);
 
-    return view('products.index', compact('products'));
+    return;
 }
 
 }
