@@ -56,8 +56,7 @@
                             <td>{{ $pedido->forma_pago }}</td>
                             <td>{{ $pedido->estado }}</td>
                             <td>
-                            <!-- route('factura.show', $pedido->factura->id) -->
-                                <a href="#" class="btn btn-primary">
+                                <a href="{{ route('factura.generar', $pedido->id) }}" class="btn btn-primary">
                                     <i class="fas fa-file-invoice"></i> Ver Factura
                                 </a>
                             </td>

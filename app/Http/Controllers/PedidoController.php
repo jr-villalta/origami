@@ -46,7 +46,7 @@ class PedidoController extends Controller
         $pedido->total_pedido = $this->calcularTotalPedido($carritoActual); // Método para calcular el total
         $pedido->retiro_tienda = $request->input('entrega') == 'tienda';
         $pedido->forma_pago = $request->input('pago');
-        $pedido->estado = 'pendiente'; // Puedes ajustar el estado según tu lógica
+        $pedido->estado = 'Preparando pedido';
         $pedido->save();
 
         // Agregar los productos al pedido en la tabla intermedia (productos_pedidos)
