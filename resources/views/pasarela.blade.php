@@ -31,7 +31,8 @@
                         <h5 class="p-1">Pasarela de pago</h5>
                     </div>
                     <div class="card-body">
-                        <form>
+                        <form action="{{ route('realizar.pedido') }}" method="POST">
+                            @csrf <!-- Agregar token CSRF -->
                             <div class="mb-3">
                                 <label for="fecha" class="form-label">Fecha:</label>
                                 <input type="text" id="fecha" class="form-control" value="{{ date('d-m-Y') }}" readonly>
@@ -51,12 +52,50 @@
 
                             <div class="mb-3" id="direccion" style="display: none;">
                                 <label for="direccion-envio" class="form-label">Dirección de envío:</label>
-                                <input type="text" id="direccion-envio" class="form-control">
+                                <input type="text" id="direccion-envio" class="form-control" name="direccion_envio">
                             </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Forma de pago:</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="pago" id="contra-entrega" value="efectivo" checked>
+                                    <label class="form-check-label" for="contra-entrega">Contra entrega</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="pago" id="tarjeta" value="tarjeta">
+                                    <label class="form-check-label" for="tarjeta">Tarjeta de crédito o débito</label>
+                                </div>
+                            </div>
+
+                            <!-- Campos para la información de la tarjeta -->
+                            <div id="campos-tarjeta" style="display: none;">
+                                <div class="mb-3">
+                                    <label for="nombre-tarjeta" class="form-label">Nombre en la tarjeta:</label>
+                                    <input type="text" class="form-control" id="nombre-tarjeta" name="nombre_tarjeta">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="numero-tarjeta" class="form-label">Número de tarjeta:</label>
+                                    <input type="text" class="form-control" id="numero-tarjeta" name="numero_tarjeta">
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="fecha-expiracion" class="form-label">Fecha de expiración:</label>
+                                        <input type="text" class="form-control" id="fecha-expiracion" name="fecha_expiracion" placeholder="MM/YY">
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="codigo-seguridad" class="form-label">Código de seguridad:</label>
+                                        <input type="text" class="form-control" id="codigo-seguridad" name="codigo_seguridad">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Fin de campos para la información de la tarjeta -->
 
                             <!-- Botón de pago -->
                             <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-primary">Proceder al pago</button>
+                                <button type="submit" class="btn btn-primary">Realizar Pedido</button>
                             </div>
                         </form>
                     </div>
@@ -74,46 +113,6 @@
                             <h5 class="mb-2">Total a pagar</h5>
                             <h4 class="mb-0 text-primary">${{ $total }}</h4>
                         </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Forma de pago:</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="pago" id="contra-entrega" value="efectivo" checked>
-                                <label class="form-check-label" for="contra-entrega">Contra entrega</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="pago" id="tarjeta" value="tarjeta">
-                                <label class="form-check-label" for="tarjeta">Tarjeta de crédito o débito</label>
-                            </div>
-                        </div>
-
-                        <!-- Campos para la información de la tarjeta -->
-                        <div id="campos-tarjeta" style="display: none;">
-                            <div class="mb-3">
-                                <label for="nombre-tarjeta" class="form-label">Nombre en la tarjeta:</label>
-                                <input type="text" class="form-control" id="nombre-tarjeta" name="nombre_tarjeta">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="numero-tarjeta" class="form-label">Número de tarjeta:</label>
-                                <input type="text" class="form-control" id="numero-tarjeta" name="numero_tarjeta">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="fecha-expiracion" class="form-label">Fecha de expiración:</label>
-                                <input type="text" class="form-control" id="fecha-expiracion" name="fecha_expiracion">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="codigo-seguridad" class="form-label">Código de seguridad:</label>
-                                <input type="text" class="form-control" id="codigo-seguridad" name="codigo_seguridad">
-                            </div>
-                        </div>
-                        <!-- Fin de campos para la información de la tarjeta -->
-
-                        <div class="d-grid gap-2">
-                            <button type="button" class="btn btn-primary">Ordenar</button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -127,14 +126,10 @@
             });
         });
 
-        <!-- Mostrar/ocultar campos de tarjeta al seleccionar/deseleccionar tarjeta -->
-document.getElementById('tarjeta').addEventListener('change', function() {
-    document.getElementById('campos-tarjeta').style.display = this.checked ? 'block' : 'none';
-});
-
-// Asegurarse de ocultar los campos de tarjeta si la opción de tarjeta no está seleccionada inicialmente
-document.getElementById('campos-tarjeta').style.display = document.getElementById('tarjeta').checked ? 'block' : 'none';
-
+        // Mostrar/ocultar campos de tarjeta al seleccionar/deseleccionar tarjeta
+        document.getElementById('tarjeta').addEventListener('change', function() {
+            document.getElementById('campos-tarjeta').style.display = this.checked ? 'block' : 'none';
+        });
     </script>
 </body>
 </html>
