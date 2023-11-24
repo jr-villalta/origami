@@ -15,8 +15,8 @@ class ProductSeeder extends Seeder
         //
         \App\Models\Product::create([
             'id_categoria' => 1,
-            'nombre' => 'Papel bond',
-            'descripcion' => 'Papel bond tamaño carta',
+            'nombre' => 'Resma de Papel bond',
+            'descripcion' => 'Resma de Papel bond tamaño carta',
             'cantidad' => 0,
             'precio_venta' => 5,
             'stock_minimo' => 1,
@@ -29,7 +29,7 @@ class ProductSeeder extends Seeder
             'nombre' => 'Cartón',
             'descripcion' => 'Cartón tamaño carta',
             'cantidad' => 0,
-            'precio_venta' => 10,
+            'precio_venta' => 1,
             'stock_minimo' => 1,
             'cantidad_sugerida' => 1,
             'estado' => 'Activo'
@@ -40,7 +40,7 @@ class ProductSeeder extends Seeder
             'nombre' => 'Tijeras',
             'descripcion' => 'Tijera de acero inoxidable',
             'cantidad' => 0,
-            'precio_venta' => 10,
+            'precio_venta' => 2,
             'stock_minimo' => 1,
             'cantidad_sugerida' => 1,
             'estado' => 'Activo'
@@ -51,7 +51,7 @@ class ProductSeeder extends Seeder
             'nombre' => 'Pegamento',
             'descripcion' => 'Pegamento blanco',
             'cantidad' => 0,
-            'precio_venta' => 10,
+            'precio_venta' => 1,
             'stock_minimo' => 1,
             'cantidad_sugerida' => 1,
             'estado' => 'Activo'
@@ -60,9 +60,9 @@ class ProductSeeder extends Seeder
         \App\Models\Product::create([
             'id_categoria' => 1,
             'nombre' => 'Cinta adhesiva',
-            'descripcion' => 'Cinta adhesiva transparente',
+            'descripcion' => 'Cinta adhesiva transparente grande',
             'cantidad' => 0,
-            'precio_venta' => 10,
+            'precio_venta' => 1,
             'stock_minimo' => 1,
             'cantidad_sugerida' => 1,
             'estado' => 'Desactivo'
@@ -73,7 +73,7 @@ class ProductSeeder extends Seeder
             'nombre' => 'Papel crepé',
             'descripcion' => 'Papel crepé de colores',
             'cantidad' => 0,
-            'precio_venta' => 10,
+            'precio_venta' => 2,
             'stock_minimo' => 1,
             'cantidad_sugerida' => 1,
             'estado' => 'Desactivo'
@@ -84,7 +84,7 @@ class ProductSeeder extends Seeder
             'nombre' => 'Papel celofán',
             'descripcion' => 'Papel celofán de colores',
             'cantidad' => 0,
-            'precio_venta' => 10,
+            'precio_venta' => 3,
             'stock_minimo' => 1,
             'cantidad_sugerida' => 1,
             'estado' => 'Desactivo'
@@ -95,7 +95,7 @@ class ProductSeeder extends Seeder
             'nombre' => 'Papel china',
             'descripcion' => 'Papel china de colores',
             'cantidad' => 0,
-            'precio_venta' => 10,
+            'precio_venta' => 2,
             'stock_minimo' => 1,
             'cantidad_sugerida' => 1,
             'estado' => 'Desactivo'
@@ -106,7 +106,7 @@ class ProductSeeder extends Seeder
             'nombre' => 'Papel lustre',
             'descripcion' => 'Papel lustre de colores',
             'cantidad' => 0,
-            'precio_venta' => 10,
+            'precio_venta' => 3,
             'stock_minimo' => 1,
             'cantidad_sugerida' => 1,
             'estado' => 'Desactivo'
@@ -117,7 +117,7 @@ class ProductSeeder extends Seeder
             'nombre' => 'Papel seda',
             'descripcion' => 'Papel seda de colores',
             'cantidad' => 0,
-            'precio_venta' => 10,
+            'precio_venta' => 2,
             'stock_minimo' => 1,
             'cantidad_sugerida' => 1,
             'estado' => 'Desactivo'
@@ -128,7 +128,7 @@ class ProductSeeder extends Seeder
             'nombre' => 'Papel de regalo',
             'descripcion' => 'Papel de regalo de colores',
             'cantidad' => 0,
-            'precio_venta' => 10,
+            'precio_venta' => 3,
             'stock_minimo' => 1,
             'cantidad_sugerida' => 1,
             'estado' => 'Desactivo'

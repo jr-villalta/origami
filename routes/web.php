@@ -8,6 +8,7 @@ use App\Http\Controllers\ComprasController;
 use App\Http\Controllers\ConfiguracionController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -126,3 +127,4 @@ Route::get('/inventario', [ComprasController::class, 'index'])->name('inventario
 //Route::get('/products/search', 'ProductController@search')->name('products.search');
 
 Route::post('/', [ContactController::class, 'submit'])->name('contact.submit');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
