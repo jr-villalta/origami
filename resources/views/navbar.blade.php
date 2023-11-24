@@ -20,29 +20,40 @@
                                 Cuenta
                             </a>
                             <ul class="dropdown-menu">
-                                @if (auth()->user()->level == 'Admin')
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('dashboard') }}">
-                                            <i class="fas fa-tachometer-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Administración
-                                        </a>
-                                    </li>
-                                    <li><hr class="dropdown-divider"></li>
-                                @endif
-                                <li>
-                                    <button class="nav-link btn btn-link" data-bs-toggle="modal" data-bs-target="#profileModal">
-                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Ver perfil
-                                    </button>
-                                </li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('logout') }}">
-                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Cerrar sesion
-                                    </a>
-                                </li>
-                            </ul>
+    @if (auth()->user()->level == 'Admin')
+        <li>
+            <a class="dropdown-item" href="{{ route('dashboard') }}">
+                <i class="fas fa-tachometer-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                Administración
+            </a>
+        </li>
+        <li><hr class="dropdown-divider"></li>
+    @endif
+
+    <li>
+        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#profileModal">
+            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+            Ver perfil
+        </button>
+    </li>
+
+    <li>
+        <a class="dropdown-item" href="{{ route('pedidos.index') }}">
+            <i class="fas fa-shopping-cart fa-sm fa-fw mr-2 text-gray-400"></i>
+            Ver pedidos
+        </a>
+    </li>
+
+    <li><hr class="dropdown-divider"></li>
+
+    <li>
+        <a class="dropdown-item" href="{{ route('logout') }}">
+            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+            Cerrar sesión
+        </a>
+    </li>
+</ul>
+
                             </li>
                         @else
                             <a class="nav-link active" aria-current="page" href="{{ route('login') }}">Iniciar sesion</a>
