@@ -11,15 +11,11 @@ use Illuminate\Support\Facades\Auth;
 
 class PedidoController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth'); // Asegura que el usuario esté autenticado
-    }
 
     public function index()
     {
         // Obtén los pedidos que deseas mostrar
-        $pedidos = Pedido::where('id_cliente', '=' , auth()->id())->get();
+        $pedidos = Pedido::where('id_cliente', '=' , auth()->id())->get();  
 
         // Pasa los pedidos a la vista
         return view('pedidos.index', compact('pedidos'));
