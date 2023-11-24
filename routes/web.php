@@ -95,6 +95,9 @@ Route::post('/profile/update', [AuthController::class, 'updateProfile'])->name('
 // Realizar pedido
 Route::post('/realizar-pedido', [PedidoController::class, 'realizarPedido'])->name('realizar.pedido');
 
+// Mostrar pedidos
+Route::get('/pedidos', [PedidoController::class, 'index'])->name('pedidos.index');
+
 // Inventario
 Route::get('/inventario', function () {
     return view('inventario.index');

@@ -11,10 +11,32 @@ use Illuminate\Support\Facades\Auth;
 
 class PedidoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth'); // Asegura que el usuario esté autenticado
+    }
+
+    public function index()
+    {
+        // Obtén los pedidos que deseas mostrar
+        $pedidos = Pedido::where('id_cliente', '=' , auth()->id())->get();
+
+        // Pasa los pedidos a la vista
+        return view('pedidos.index', compact('pedidos'));
+    }
+
+
     public function realizarPedido(Request $request)
     {
         // Obtener el carrito actual de la sesión
         $carritoActual = session('carrito') ? session('carrito') : [];
+
+        if ($request->input('entrega') == 'domicilio') {
+            $direccionEnvio = $request->input('direccion_envio');
+            if (!$direccionEnvio) {
+                return redirect()->back()->with('error', 'La dirección de envío es obligatoria para la entrega a domicilio.');
+            }
+        }
 
         // Verificar si hay productos en el carrito
         if (empty($carritoActual)) {
@@ -53,20 +75,19 @@ class PedidoController extends Controller
 
         $pedido->factura()->save($factura);
 
-        // Crear un envío si la entrega es a domicilio
         if ($request->input('entrega') == 'domicilio') {
-            $envio = new Envio([
-                'direccion_envio' => $request->input('direccion-envio'),
-                'estado' => 'pendiente', // Puedes ajustar el estado según tu lógica
-            ]);
+        $envio = new Envio([
+            'direccion_envio' => $direccionEnvio,
+            'estado' => 'pendiente',
+        ]);
 
-            $pedido->envio()->save($envio);
+        $pedido->envio()->save($envio);
         }
 
         // Limpiar el carrito después de realizar el pedido
         session(['carrito' => []]);
 
-        return redirect()->route('ruta.donde.redirigir')->with('success', 'Pedido realizado con éxito.');
+        return redirect()->route('pedidos.index')->with('mensaje', 'Pedido realizado con éxito.');    
     }
 
     // Método para calcular el total del pedido
