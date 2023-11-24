@@ -296,6 +296,7 @@ class ProductController extends Controller
     return redirect()->back();
 }
 
+/*
 public function buscar(Request $request)
 {
     $query = $request->input('query');
@@ -305,7 +306,8 @@ public function buscar(Request $request)
         ->orWhere('descripcion', 'LIKE', '%' . $query . '%')
         ->get();
 
-    return view('productos.resultados', ['resultados' => $resultados, 'query' => $query]);
+    return view('resultados', ['resultados' => $resultados, 'query' => $query]);
 }
+*/
 
 }
