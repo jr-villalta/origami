@@ -25,16 +25,6 @@
                             <input type="text" name="email" disabled class="form-control" value="{{ auth()->user()->email }}" placeholder="Correo">
                         </div>
                     </div>
-                    <div class="row mt-2">
-                        <div class="col-md-6">
-                            <label class="labels">Teléfono</label>
-                            <input type="text" name="phone" class="form-control" placeholder="Phone Number" value="{{ auth()->user()->phone }}">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="labels">Dirección</label>
-                            <input type="text" name="address" class="form-control" value="{{ auth()->user()->address }}" placeholder="Address">
-                        </div>
-                    </div>
                     
                     <div class="mt-5 text-center"><button id="btn" class="btn btn-primary profile-button" type="submit">Guardar cambios</button></div>
                 </div>

@@ -14,7 +14,7 @@ class CategoriaSeeder extends Seeder
     {
         //
         \App\Models\Categoria::create([
-            'nombre' => 'Papel',
+            'nombre' => 'Otros',
         ]);
 
         \App\Models\Categoria::create([
@@ -31,6 +31,10 @@ class CategoriaSeeder extends Seeder
 
         \App\Models\Categoria::create([
             'nombre' => 'Tijeras',
+        ]);
+
+        \App\Models\Categoria::create([
+            'nombre' => 'Papel',
         ]);
 
     }

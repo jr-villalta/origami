@@ -113,3 +113,6 @@ Route::get('/plantilla', function () {
 Route::post('/inventario', [ProductController::class, 'cargarInventario'])->name('cargarInventario');
 
 Route::get('/inventario', [ComprasController::class, 'index'])->name('inventario');
+
+// buscar productos
+//Route::get('/products/search', 'ProductController@search')->name('products.search');

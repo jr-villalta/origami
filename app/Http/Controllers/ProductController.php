@@ -292,6 +292,17 @@ public function eliminarDelCarrito($productId)
 
     return redirect()->back();
 }
-    
+
+public function search(Request $request)
+{
+    $query = $request->input('query');
+
+    $products = Product::where('nombre', 'like', "%$query%")
+        ->orWhere('descripcion', 'like', "%$query%")
+        // Agrega más condiciones según sea necesario
+        ->paginate(12);
+
+    return view('products.index', compact('products'));
+}
 
 }

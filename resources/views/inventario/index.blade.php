@@ -67,7 +67,7 @@
                         </div>
                         
                         <div class="col-md-2 col-sm-6 mb-2">
-                            <input type="number" name="costo" class="form-control" placeholder="Costo del producto" required min="0" step="0.01">
+                            <input type="number" name="costo" class="form-control" placeholder="Costo c/u" required min="0" step="0.01">
                         </div>
                         
                         <div class="col-md-2 col-sm-6 mb-2">
@@ -117,7 +117,23 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
-                
+                <div class="container-fluid">
+                    <table class="table table-bordered table-hover mt-2">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Producto</th>
+                                <th>Precio de compra</th>
+                                <th>Precio de venta</th>
+                                <th>IVA (con checking)</th>
+                                <th>Utilidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="tab-pane fade" id="tab4" role="tabpanel" aria-labelledby="tab4-tab">
                 
