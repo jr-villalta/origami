@@ -20,7 +20,7 @@
                         @auth
                             <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Cuenta
+                                {{ auth()->user()->email }}
                             </a>
                             <ul class="dropdown-menu">
     @if (auth()->user()->level == 'Admin')
