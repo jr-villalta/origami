@@ -286,6 +286,9 @@
         </div>
     </div>
     <script>
+
+    var contactSection = document.getElementById('contactSection');
+    contactSection.style.display = 'none';
     // Función para mostrar la sección "Sobre Nosotros"
     function showAboutSection() {
         var aboutSection = document.querySelector('.about-section');

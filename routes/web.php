@@ -128,3 +128,5 @@ Route::get('/inventario', [ComprasController::class, 'index'])->name('inventario
 
 Route::post('/', [ContactController::class, 'submit'])->name('contact.submit');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+
