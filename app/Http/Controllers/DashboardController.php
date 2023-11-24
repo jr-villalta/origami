@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Categoria;
 use App\Models\User;
+use App\Models\Pedido;
 
 class DashboardController extends Controller
 {
@@ -17,7 +18,8 @@ class DashboardController extends Controller
         $inactiveProducts = Product::where('estado', 'Desactivo')->count();
         $totalCategories = Categoria::count();
         $totalUsers = User::where('level', 'User')->count();
+        $totalPedidos = Pedido::count();
 
-        return view('dashboard', compact('totalProducts', 'activeProducts', 'inactiveProducts', 'totalCategories', 'totalUsers'));
+        return view('dashboard', compact('totalProducts', 'activeProducts', 'inactiveProducts', 'totalCategories', 'totalUsers', 'totalPedidos'));
     }
 }
