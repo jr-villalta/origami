@@ -292,7 +292,6 @@ class ProductController extends Controller
 
     return redirect()->back();
 }
-<<<<<<< HEAD
 
 public function search(Request $request)
 {
@@ -300,13 +299,10 @@ public function search(Request $request)
 
     $products = Product::where('nombre', 'like', "%$query%")
         ->orWhere('descripcion', 'like', "%$query%")
-        // Agrega más condiciones según sea necesario
+        ->orWhere('precio_venta', 'like', "%$query%")
         ->paginate(12);
 
-    return view('products.index', compact('products'));
+    return;
 }
 
-=======
-    
->>>>>>> b7fde6d6ff85e46810ba5d71c9b3c3afae6002ff
 }

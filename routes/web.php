@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ComprasController;
 use App\Http\Controllers\ConfiguracionController;
 use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -120,3 +121,5 @@ Route::get('/inventario', [ComprasController::class, 'index'])->name('inventario
 
 // buscar productos
 //Route::get('/products/search', 'ProductController@search')->name('products.search');
+
+Route::post('/', [ContactController::class, 'submit'])->name('contact.submit');
