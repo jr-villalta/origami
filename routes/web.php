@@ -10,6 +10,7 @@ use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FacturaController;
+use App\Http\Controllers\VentaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -102,6 +103,10 @@ Route::get('/pedidos', [PedidoController::class, 'index'])->name('pedidos.index'
 
 // Generar factura
 Route::get('factura/{idPedido}',[FacturaController::class ,'generarFactura'])->name('factura.generar');
+
+// Ventas
+// Ruta para mostrar las ventas
+Route::get('/ventas/{filtro?}', [VentaController::class,'index'])->name('ventas.index');
 
 // Inventario
 Route::get('/inventario', function () {

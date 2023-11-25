@@ -31,4 +31,8 @@ class Pedido extends Model
     {
         return $this->hasOne(Envio::class, 'id_pedido');
     }
+
+    public function user(){
+        return $this->hasOne(User::class, 'id_cliente');
+    }
 }

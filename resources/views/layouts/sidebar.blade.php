@@ -25,7 +25,7 @@
     </li>
 
     <li class="nav-item">
-      <a class="nav-link" href="#">
+      <a class="nav-link" href="/ventas">
         <i class=""></i>
         <span>Estadístico</span></a>
     </li>
